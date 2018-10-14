@@ -1,4 +1,4 @@
-import {Chat} from "./components/Chat";
+import {App} from "./components/App";
 
 require.context('../public/', true);
 
@@ -10,4 +10,4 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 
-ReactDOM.render(<Chat />, document.getElementById('app-root'));
+ReactDOM.render(<App />, document.getElementById('app-root'));
