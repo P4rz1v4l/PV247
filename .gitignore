@@ -15,4 +15,5 @@ dist
 .env
 npm-debug.log
 
+# DevTools
 .idea/*
