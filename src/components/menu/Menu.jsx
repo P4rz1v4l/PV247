@@ -1,9 +1,11 @@
 import React from 'react';
 
+import './menu.scss';
+
 export class Menu extends React.PureComponent {
   render() {
     return (
-      <h1>Menu</h1>
+      <h1 className="test">Menu</h1>
     );
   }
 }

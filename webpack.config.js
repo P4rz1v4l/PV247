@@ -59,6 +59,16 @@ module.exports = {
           { loader: "less-loader" }
         ]
       },
+      { test: /\.scss$/,
+        exclude: [
+          path.resolve(__dirname, './node_modules')
+        ],
+        use: [
+          { loader: "style-loader" },
+          { loader: "css-loader" },
+          { loader: "sass-loader" }
+        ]
+      },
       {
         test: /\.(eot|svg|ttf|woff|woff2)/,
         use: [
