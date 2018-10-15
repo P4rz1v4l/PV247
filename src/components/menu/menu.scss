@@ -8,17 +8,29 @@
   h2 {
     font-family: $font-family-primary;
     font-size: 16px;
-    margin: 0px;
+    margin: 0;
+  }
+
+  h3 {
+    font-family: $font-family-primary;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .col-12 {
+    padding: 0;
   }
 
   .header {
-    margin: 18px 9px 30px 9px;
+    margin: 0 0 30px 0;
+    padding: 9px $menu-padding-leftright;
 
     h1 {
       color: #fff;
       font-size: 24px;
       line-height: 24px;
-      margin: 0px;
+      margin: 0;
+      cursor: pointer;
 
       &:after {
         content: '•';
@@ -29,6 +41,7 @@
 
     span{
       font-size: 12px;
+      cursor: pointer;
     }
 
     .avatar {
@@ -36,13 +49,16 @@
       height: 32px;
       border-radius: 2px;
       background-color: $gray-80;
+      cursor: pointer;
     }
   }
 
   .channels {
-    margin: 0px 9px 0px 9px;
+    margin: 0;
 
     .title {
+      padding: 0 $menu-padding-leftright;
+
       span {
         font-size: 20px;
         font-weight: bold;
@@ -51,7 +67,34 @@
 
     .list {
       .channel {
+        padding: 5px $menu-padding-leftright;
+        cursor: pointer;
 
+        &:hover {
+          background-color: $color-ternary;
+        }
+
+        &.active {
+          background-color: $color-secondary;
+          color: $color-primary;
+        }
+
+        svg {
+          position: relative;
+          top: 4px;
+          margin-right: 10px;
+        }
+
+        h3 {
+          position: relative;
+          top: 3px;
+        }
+
+        span {
+          font-size: 11px;
+          position: relative;
+          top: -2px;
+        }
       }
     }
   }
