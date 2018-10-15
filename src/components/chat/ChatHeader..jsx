@@ -3,7 +3,7 @@ import React from 'react';
 import { Delete, DeleteOutlined } from '@material-ui/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export class ChatInfo extends React.PureComponent {
+export class ChatHeader extends React.PureComponent {
   render() {
     return (
       <div>

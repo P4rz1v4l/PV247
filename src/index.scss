@@ -1,0 +1,17 @@
+@import '_variables.scss';
+
+*, h1, h2, h3, h4, h5, h6, a {
+  font-family: $font-family-primary;
+}
+
+html {
+  height: 100%;
+};
+
+body {
+  height: 100%;
+
+  #app-root {
+    height: 100%;
+  };
+};

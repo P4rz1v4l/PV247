@@ -1,5 +1,7 @@
 import {App} from "./components/App";
 
+import './index.scss';
+
 require.context('../public/', true);
 
 // Enables ES7 features such as async/await in *.js/*.jsx code

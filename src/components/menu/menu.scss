@@ -1,7 +1,59 @@
-$h1-color: green;
+@import '../../_variables.scss';
 
 #menu {
-  h1 {
-    color: $h1-color;
+  height: 100%;
+  background-color: $color-primary;
+  color: $gray-80;
+
+  h2 {
+    font-family: $font-family-primary;
+    font-size: 16px;
+    margin: 0px;
   }
+
+  .header {
+    margin: 18px 9px 30px 9px;
+
+    h1 {
+      color: #fff;
+      font-size: 24px;
+      line-height: 24px;
+      margin: 0px;
+
+      &:after {
+        content: '•';
+        color: $color-secondary;
+        margin-left: 5px;
+      }
+    }
+
+    span{
+      font-size: 12px;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 2px;
+      background-color: $gray-80;
+    }
+  }
+
+  .channels {
+    margin: 0px 9px 0px 9px;
+
+    .title {
+      span {
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+
+    .list {
+      .channel {
+
+      }
+    }
+  }
+
 }
