@@ -4,20 +4,18 @@ import { ChatHeader } from "./ChatHeader.";
 import { ChatMessages } from "./ChatMessages.";
 import { ChatInfos } from "./ChatInfos.";
 
+import './chat.scss';
+
 export class Chat extends React.PureComponent {
   render() {
     return (
       <div id="chat" className="col-md-9 col-xl-10 col-12">
-        <div className="row">
-          <div className="col-12">
+        <div className="d-flex flex-row align-content-start flex-wrap">
             <ChatHeader />
-          </div>
-          <div className="col-lg-9 col-xl-8 col-12">
+
             <ChatMessages />
-          </div>
-          <div className="col-lg-9 col-xl-4 col-12">
+
             <ChatInfos />
-          </div>
         </div>
       </div>
     );

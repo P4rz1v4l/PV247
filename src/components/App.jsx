@@ -1,14 +1,15 @@
 import React from 'react';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faAlignLeft, faComments } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faComments } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-regular-svg-icons';
 
 import { Menu } from './menu/Menu';
 import { Chat } from './chat/Chat';
 
 import './app.scss';
 
-library.add(faAlignLeft, faComments);
+library.add(faCog, faComments, faStar);
 
 export class App extends React.PureComponent {
   render() {

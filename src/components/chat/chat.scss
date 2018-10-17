@@ -1,0 +1,78 @@
+@import '../../_variables.scss';
+
+#chat {
+  height: 100%;
+  padding: 0 37px;
+
+  .row {
+    height: 100%;
+  }
+
+  h4 {
+    position: relative;
+    margin: 0;
+
+    span {
+      margin: 0 4px;
+    }
+  }
+
+  .highlight-line {
+    position: absolute;
+    bottom: -4px;
+    width: 100%;
+    height: 3px;
+    background-color: $color-secondary;
+    border-radius: 2px;
+  }
+
+  .header {
+    margin: 18px 0 31px 0;
+
+    h2 {
+      margin: 0 12px -3px 0;
+      font-size: 24px;
+      font-family: $font-family-secondary;
+    }
+
+    svg {
+      height: 21px;
+      width: 21px;
+      margin: 0 5px;
+
+      &.star {
+        position: relative;
+        top: -1px;
+      }
+    }
+
+    .description {
+      font-size: 11px;
+    }
+  }
+
+
+  .messages-container {
+    .title {
+      border-bottom: 1px solid $color-primary;
+
+      h4 {
+        font-size: 16px;
+        display: inline-block;
+      }
+    }
+  }
+
+
+  .channel-info {
+    .title {
+      border-bottom: 1px solid $color-primary;
+
+      h4 {
+        font-size: 16px;
+        margin-right: 24px;
+        display: inline-block;
+      }
+    }
+  }
+}

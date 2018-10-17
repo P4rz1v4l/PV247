@@ -1,14 +1,22 @@
 import React from 'react';
 
-import { Delete, DeleteOutlined } from '@material-ui/icons';
+// import { Delete, DeleteOutlined } from '@material-ui/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export class ChatHeader extends React.PureComponent {
   render() {
     return (
-      <div>
-        <h2>Name <Delete /> <DeleteOutlined /></h2>
-        <div>Description <FontAwesomeIcon icon="align-left" /></div>
+      <div className="col-12 header">
+        <div className="d-flex align-items-center name">
+          <h2>nullnull</h2>
+          <FontAwesomeIcon icon="cog" />
+          <FontAwesomeIcon icon={['far', 'star']} color="red" />
+        </div>
+        <div className="description">
+          <span>
+            Lorem ipsum dolor sit amet, sed ea wisi eius. Quo lorem deserunt ex, quo iudicabit vituperata scriptorem ex.
+          </span>
+        </div>
       </div>
     );
   }

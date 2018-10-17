@@ -22,13 +22,14 @@
   }
 
   .header {
-    margin: 0 0 30px 0;
-    padding: 9px $menu-padding-leftright;
+    margin: 0 0 86px 0;
+    padding: 18px $menu-padding-leftright;
 
     h1 {
       color: #fff;
       font-size: 24px;
       line-height: 24px;
+      font-family: $font-family-secondary;
       margin: 0;
       cursor: pointer;
 
@@ -41,6 +42,7 @@
 
     span{
       font-size: 12px;
+      font-family: $font-family-secondary;
       cursor: pointer;
     }
 
@@ -62,6 +64,7 @@
       span {
         font-size: 20px;
         font-weight: bold;
+        cursor: pointer;
       }
     }
 
@@ -77,6 +80,10 @@
         &.active {
           background-color: $color-secondary;
           color: $color-primary;
+        }
+
+        .move {
+          cursor: n-resize;
         }
 
         svg {
