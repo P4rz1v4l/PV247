@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ChatMessage } from './ChatMessage.';
+import {ChatInput} from "./ChatInput.";
 
 export class ChatMessages extends React.PureComponent {
   render() {
@@ -18,7 +19,7 @@ export class ChatMessages extends React.PureComponent {
             <ChatMessage />
           </div>
           <div className="input">
-            sdas
+            <ChatInput/>
           </div>
         </div>
       </div>

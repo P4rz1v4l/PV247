@@ -138,6 +138,17 @@
 
       .input {
         width: 100%;
+
+        input {
+          width: 100%;
+          padding: 8px 16px;
+          border: none;
+          background-color: #f1f1f3;
+        }
+
+        svg {
+          margin: 4px;
+        }
       }
     }
   }
