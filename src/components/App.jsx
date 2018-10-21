@@ -2,14 +2,14 @@ import React from 'react';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCog, faComments } from '@fortawesome/free-solid-svg-icons';
-import { faStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar, faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons';
 
 import { Menu } from './menu/Menu';
 import { Chat } from './chat/Chat';
 
 import './app.scss';
 
-library.add(faCog, faComments, faStar);
+library.add(faCog, faComments, faStar, faThumbsUp, faThumbsDown);
 
 export class App extends React.PureComponent {
   render() {

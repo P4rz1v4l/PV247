@@ -3,7 +3,7 @@
 #menu {
   height: 100%;
   background-color: $color-primary;
-  color: $gray-80;
+  color: $white-80;
 
   h2 {
     font-family: $font-family-primary;
@@ -50,7 +50,7 @@
       width: 32px;
       height: 32px;
       border-radius: 2px;
-      background-color: $gray-80;
+      background-color: $white-80;
       cursor: pointer;
     }
   }

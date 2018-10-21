@@ -4,9 +4,13 @@ $color-primary: #224762;
 $color-secondary: #FF4444;
 $color-ternary: #6E4A61;
 
-$gray-80: rgba(255, 255, 255, 0.8);
+$white-80: rgba(255, 255, 255, 0.8);
+$gray-80: rgba(0, 0, 0, 0.2);
 
 $font-family-primary: 'Open Sans', sans-serif;
 $font-family-secondary: 'Righteous', cursive;
 
 $menu-padding-leftright: 19px;
+
+$chat-messages-container-height: calc(100% - 94px);
+$chat-messages-container-body-height: calc(100% - 25px);

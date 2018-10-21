@@ -4,7 +4,7 @@
   height: 100%;
   padding: 0 37px;
 
-  .row {
+  &>.row {
     height: 100%;
   }
 
@@ -53,7 +53,10 @@
 
 
   .messages-container {
+    height: $chat-messages-container-height;
+
     .title {
+      width: 100%;
       border-bottom: 1px solid $color-primary;
 
       h4 {
@@ -61,10 +64,87 @@
         display: inline-block;
       }
     }
+
+    .body {
+      height: $chat-messages-container-body-height;
+      width: 100%;
+
+      .messages {
+        width: 100%;
+        padding-top: 15px;
+
+        .message {
+          position: relative;
+          padding: 15px 25px 15px 25px;
+          transition: background-color .4s linear;
+
+          &:hover {
+            background-color: #f1f1f3;
+
+            .icons {
+              opacity: 1;
+            }
+          }
+
+          .avatar {
+            padding: 6px 10px 0 0;
+
+            .image {
+              height: 36px;
+              width: 36px;
+              border-radius: 2px;
+              background-color: #FF4444;
+            }
+          }
+
+          .icons {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            opacity: 0;
+            transition: opacity .4s linear;
+
+            span {
+              margin: 0 6px;
+            }
+
+            div {
+              background-color: #ffffff;
+              border-radius: 4px;
+
+              svg {
+                margin: 0 5px;
+                cursor: pointer;
+              }
+
+              div {
+                height: 100%;
+                width: 1px;
+                background-color: #f1f1f3;
+              }
+            }
+          }
+
+          .author-name {
+            font-size: 15px;
+            font-weight: 500;
+          }
+
+          .text {
+            font-size: 13px;
+          }
+        }
+      }
+
+      .input {
+        width: 100%;
+      }
+    }
   }
 
 
   .channel-info {
+
     .title {
       border-bottom: 1px solid $color-primary;
 
