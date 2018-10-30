@@ -3,7 +3,7 @@ import React from 'react';
 export class ChatInfos extends React.PureComponent {
   render() {
     return (
-      <div className="col-md-3 col-xl-4 col-12 channel-info">
+      <div className="col-12 channel-info">
         <div className="title">
           <h4>
             <span>Users</span>

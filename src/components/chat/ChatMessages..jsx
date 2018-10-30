@@ -6,7 +6,7 @@ import {ChatInput} from "./ChatInput.";
 export class ChatMessages extends React.PureComponent {
   render() {
     return (
-      <div className="col-md-9 col-xl-8 col-12 messages-container">
+      <div className="col-12 messages-container">
         <div className="title">
           <h4>
             <span>Conversation</span>
