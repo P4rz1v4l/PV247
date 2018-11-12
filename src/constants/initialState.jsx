@@ -1,4 +1,4 @@
-import { Map, List } from 'immutable';
+// import { Map, List } from 'immutable';
 
 export const initialState = {
   app: {

@@ -29,7 +29,10 @@ export class ChatMessages extends React.PureComponent {
             }
           </div>
           <div className="input">
-            <ChatInput/>
+            <ChatInput
+              userName={this.props.user.name}
+              onSend={this.props.onSend}
+            />
           </div>
         </div>
       </div>

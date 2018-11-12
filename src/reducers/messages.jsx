@@ -1,4 +1,3 @@
-import { Map } from 'immutable';
 import {
   SEND_MESSAGE,
   DELETE_MESSAGE,
@@ -12,12 +11,17 @@ export const messages = (prevState = {}, action) => {
     case SEND_MESSAGE: {
       const { id, text, author } = action.payload;
 
-      return prevState.push(Map({
+      const newState = prevState.slice(0);
+      newState.push({
         id,
         text,
         author,
         likes: 0
-      }));
+      });
+
+      console.log(newState);
+
+      return newState;
     }
 
     case DELETE_MESSAGE: {
