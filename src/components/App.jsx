@@ -1,5 +1,9 @@
 import React from 'react';
 import Sidebar from "react-sidebar";
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { rootReducer } from "../reducers/rootReducer";
+import { initialState } from "../constants/initialState";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCog, faComments, faFont, faAt } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +17,8 @@ import './app.scss';
 library.add(faCog, faComments, faStar, faThumbsUp, faThumbsDown, faFont, faSmile, faImage, faFile, faAt);
 
 const mql = window.matchMedia(`(min-width: 800px)`);
+
+const store = createStore(rootReducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 export class App extends React.PureComponent {
   constructor(props) {
@@ -41,18 +47,20 @@ export class App extends React.PureComponent {
 
   render() {
     return (
-      <Sidebar
-        sidebar={<Menu />}
-        open={this.state.sidebarOpen}
-        docked={this.state.sidebarDocked}
-        onSetOpen={this.onSetSidebarOpen}
-      >
-        <div className="container-fluid">
-          <div className="row">
-            <Chat />
+      <Provider store={store}>
+        <Sidebar
+          sidebar={<Menu />}
+          open={this.state.sidebarOpen}
+          docked={this.state.sidebarDocked}
+          onSetOpen={this.onSetSidebarOpen}
+        >
+          <div className="container-fluid">
+            <div className="row">
+              <Chat />
+            </div>
           </div>
-        </div>
-      </Sidebar>
+        </Sidebar>
+      </Provider>
     );
   }
 }

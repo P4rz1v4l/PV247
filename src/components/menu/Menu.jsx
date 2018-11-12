@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { MenuHeader } from "./MenuHeader.";
-import { MenuChannelsList } from "./MenuChannelsList.";
+import { MenuHeader } from "./MenuHeader";
+import { MenuChannelsList } from "./MenuChannelsList";
+import { MenuChannelsListContainer } from "../../containers/MenuChannelsList";
 
 import './menu.scss';
 
@@ -14,7 +15,7 @@ export class Menu extends React.PureComponent {
             <MenuHeader />
           </div>
           <div className="col-12">
-            <MenuChannelsList />
+            <MenuChannelsListContainer />
           </div>
         </div>
       </div>

@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { ChatMessage } from './ChatMessage.';
-import {ChatInput} from "./ChatInput.";
+import { ChatMessage } from './ChatMessage';
+import {ChatInput} from "./ChatInput";
+import {MenuChannelsListItem} from "../menu/MenuChannelsListItem";
 
 export class ChatMessages extends React.PureComponent {
   render() {
@@ -15,8 +16,15 @@ export class ChatMessages extends React.PureComponent {
         </div>
         <div className="body d-flex align-content-between flex-wrap">
           <div className="messages">
-            <ChatMessage />
-            <ChatMessage />
+            {this.props.messages.map((message) => (
+              <ChatMessage
+                key={message.id}
+                author={message.author}
+                text={message.text}
+                likes={message.likes}
+              />
+            ))
+            }
           </div>
           <div className="input">
             <ChatInput/>

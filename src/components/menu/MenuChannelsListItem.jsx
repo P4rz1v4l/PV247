@@ -10,7 +10,7 @@ export class MenuChannelsListItem extends React.PureComponent {
             <FontAwesomeIcon icon="comments" />
             <div>
               <h3>{ this.props.name }</h3>
-              <span>1 new message</span>
+              <span>Message</span>
             </div>
           </div>
         </div>

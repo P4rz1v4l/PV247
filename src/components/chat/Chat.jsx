@@ -1,9 +1,9 @@
 import React from 'react';
 import Sidebar from "react-sidebar";
 
-import { ChatHeader } from "./ChatHeader.";
-import { ChatMessages } from "./ChatMessages.";
-import { ChatInfos } from "./ChatInfos.";
+import { ChatHeader } from "./ChatHeader";
+import { ChatMessagesContainer} from "../../containers/ChatMessages";
+import { ChatInfos } from "./ChatInfos";
 
 import './chat.scss';
 
@@ -46,7 +46,7 @@ export class Chat extends React.PureComponent {
             pullRight={true}
           >
             <ChatHeader />
-            <ChatMessages />
+            <ChatMessagesContainer />
           </Sidebar>
         </div>
       </div>

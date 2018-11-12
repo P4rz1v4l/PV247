@@ -12,7 +12,7 @@ export class ChatMessage extends React.PureComponent {
         </div>
         <div className="body">
           <div className="icons d-flex">
-            <span>+9</span>
+            <span>{this.props.likes}</span>
             <div className="d-flex align-items-center">
               <FontAwesomeIcon icon={['far', 'thumbs-down']} />
               <div></div>
@@ -20,10 +20,10 @@ export class ChatMessage extends React.PureComponent {
             </div>
           </div>
           <div className="author-name">
-            Meno
+            {this.props.author}
           </div>
           <div className="text">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            {this.props.text}
           </div>
           <div className="attachments">
           </div>

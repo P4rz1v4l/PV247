@@ -1,6 +1,6 @@
 import React from 'react';
-
-import { MenuChannelsListItem } from './MenuChannelsListItem.';
+import { Map } from 'immutable';
+import { MenuChannelsListItem } from './MenuChannelsListItem';
 
 export class MenuChannelsList extends React.PureComponent {
   render() {
@@ -13,9 +13,14 @@ export class MenuChannelsList extends React.PureComponent {
           <span>+</span>
         </div>
         <div className="list">
-          <MenuChannelsListItem name={'Custom name'} />
-          <MenuChannelsListItem name={'Kovo Sipox'} />
-          <MenuChannelsListItem name={'NullNull'} active={true} />
+          {this.props.channels.map((channel) => (
+            <MenuChannelsListItem
+              key={channel.id}
+              name={channel.name}
+              active={(channel.id === this.props.app.actualChannelId)}
+            />
+          ))
+          }
         </div>
       </div>
     );
