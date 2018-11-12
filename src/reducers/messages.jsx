@@ -19,8 +19,6 @@ export const messages = (prevState = {}, action) => {
         likes: 0
       });
 
-      console.log(newState);
-
       return newState;
     }
 
