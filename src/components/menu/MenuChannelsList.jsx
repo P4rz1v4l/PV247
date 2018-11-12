@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map } from 'immutable';
+// import { Map } from 'immutable';
 import { MenuChannelsListItem } from './MenuChannelsListItem';
 
 export class MenuChannelsList extends React.PureComponent {

@@ -2,7 +2,6 @@ import React from 'react';
 
 import { ChatMessage } from './ChatMessage';
 import {ChatInput} from "./ChatInput";
-import {MenuChannelsListItem} from "../menu/MenuChannelsListItem";
 
 export class ChatMessages extends React.PureComponent {
   render() {
@@ -19,9 +18,12 @@ export class ChatMessages extends React.PureComponent {
             {this.props.messages.map((message) => (
               <ChatMessage
                 key={message.id}
+                id={message.id}
                 author={message.author}
                 text={message.text}
                 likes={message.likes}
+                onLike={this.props.onLike}
+                onDislike={this.props.onDislike}
               />
             ))
             }

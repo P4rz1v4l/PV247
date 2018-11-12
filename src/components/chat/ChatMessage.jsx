@@ -14,9 +14,9 @@ export class ChatMessage extends React.PureComponent {
           <div className="icons d-flex">
             <span>{this.props.likes}</span>
             <div className="d-flex align-items-center">
-              <FontAwesomeIcon icon={['far', 'thumbs-down']} />
+              <FontAwesomeIcon icon={['far', 'thumbs-down']} onClick={() => this.props.onDislike(this.props.id)} />
               <div></div>
-              <FontAwesomeIcon icon={['far', 'thumbs-up']} />
+              <FontAwesomeIcon icon={['far', 'thumbs-up']} onClick={() => this.props.onLike(this.props.id)} />
             </div>
           </div>
           <div className="author-name">

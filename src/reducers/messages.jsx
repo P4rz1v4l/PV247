@@ -1,4 +1,4 @@
-import { Map, List} from 'immutable';
+import { Map } from 'immutable';
 import {
   SEND_MESSAGE,
   DELETE_MESSAGE,
@@ -7,7 +7,7 @@ import {
   EDIT_MESSAGE
 } from '../constants/actionsTypes';
 
-export const messages = (prevState = List(), action) => {
+export const messages = (prevState = {}, action) => {
   switch (action.type) {
     case SEND_MESSAGE: {
       const { id, text, author } = action.payload;
@@ -33,16 +33,24 @@ export const messages = (prevState = List(), action) => {
 
     case LIKE_MESSAGE: {
       const index = prevState.findIndex((item) => item.id === action.payload.id);
-      const oldMessage = prevState.get(index);
+      const oldMessage = prevState[index];
+      const newMessage = {...oldMessage, likes: oldMessage.likes + 1};
 
-      return prevState.set(index, {...oldMessage, likes: oldMessage.likes + 1});
+      const newState = prevState.slice(0);
+      newState[index] = newMessage;
+
+      return newState;
     }
 
     case DISLIKE_MESSAGE: {
       const index = prevState.findIndex((item) => item.id === action.payload.id);
-      const oldMessage = prevState.get(index);
+      const oldMessage = prevState[index];
+      const newMessage = {...oldMessage, likes: oldMessage.likes - 1};
 
-      return prevState.set(index, {...oldMessage, likes: oldMessage.likes - 1});
+      const newState = prevState.slice(0);
+      newState[index] = newMessage;
+
+      return newState;
     }
 
     default:
