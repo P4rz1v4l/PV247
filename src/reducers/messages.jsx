@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import {
   SEND_MESSAGE,
   DELETE_MESSAGE,
@@ -11,48 +12,31 @@ export const messages = (prevState = {}, action) => {
     case SEND_MESSAGE: {
       const { id, text, author } = action.payload;
 
-      const newState = prevState.slice(0);
-      newState.push({
-        id,
-        text,
-        author,
-        likes: 0
-      });
-
-      return newState;
+      return prevState.push(Map({
+        id, text, author, likes: 0
+      }));
     }
 
     case DELETE_MESSAGE: {
-      return prevState.filter((item) => item.id !== action.payload.id).toList();
+      return prevState.filter((item) => item.get('id') !== action.payload.id);
     }
 
     case EDIT_MESSAGE: {
-      const index = prevState.findIndex((item) => item.id === action.payload.id);
-      const oldMessage = prevState.get(index);
+      const index = prevState.findIndex((item) => item.get('id') === action.payload.id);
 
-      return prevState.set(index, {...oldMessage, text: action.payload.text});
+      return prevState.setIn([index, 'text'], action.payload.text);
     }
 
     case LIKE_MESSAGE: {
-      const index = prevState.findIndex((item) => item.id === action.payload.id);
-      const oldMessage = prevState[index];
-      const newMessage = {...oldMessage, likes: oldMessage.likes + 1};
+      const index = prevState.findIndex((item) => item.get('id') === action.payload.id);
 
-      const newState = prevState.slice(0);
-      newState[index] = newMessage;
-
-      return newState;
+      return prevState.updateIn([index, 'likes'], val => val + 1);
     }
 
     case DISLIKE_MESSAGE: {
-      const index = prevState.findIndex((item) => item.id === action.payload.id);
-      const oldMessage = prevState[index];
-      const newMessage = {...oldMessage, likes: oldMessage.likes - 1};
+      const index = prevState.findIndex((item) => item.get('id') === action.payload.id);
 
-      const newState = prevState.slice(0);
-      newState[index] = newMessage;
-
-      return newState;
+      return prevState.updateIn([index, 'likes'], val => val - 1);
     }
 
     default:

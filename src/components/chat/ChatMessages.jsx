@@ -17,11 +17,11 @@ export class ChatMessages extends React.PureComponent {
           <div className="messages">
             {this.props.messages.map((message) => (
               <ChatMessage
-                key={message.id}
-                id={message.id}
-                author={message.author}
-                text={message.text}
-                likes={message.likes}
+                key={message.get('id')}
+                id={message.get('id')}
+                author={message.get('author')}
+                text={message.get('text')}
+                likes={message.get('likes')}
                 onLike={this.props.onLike}
                 onDislike={this.props.onDislike}
               />
@@ -30,7 +30,7 @@ export class ChatMessages extends React.PureComponent {
           </div>
           <div className="input">
             <ChatInput
-              userName={this.props.user.name}
+              userName={this.props.user.get('name')}
               onSend={this.props.onSend}
             />
           </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactHtmlParser from 'react-html-parser';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export class ChatMessage extends React.PureComponent {
@@ -23,7 +24,7 @@ export class ChatMessage extends React.PureComponent {
             {this.props.author}
           </div>
           <div className="text">
-            {this.props.text}
+            {ReactHtmlParser(this.props.text)}
           </div>
           <div className="attachments">
           </div>

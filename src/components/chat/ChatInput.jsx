@@ -15,20 +15,29 @@ export class ChatInput extends React.PureComponent {
   };
 
   keyPressed = (event) => {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      this.send();
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      if (!event.shiftKey) {
+        this.send();
+      }
+      else {
+        this.setState((state) => {
+          return {value: state.value + '\r\n' };
+        });
+      }
     }
   };
 
   send = () => {
-    this.props.onSend(this.props.userName, this.state.value);
+    const replaced = this.state.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    this.props.onSend(this.props.userName, replaced);
     this.setState({value: ''});
   }
 
   render() {
     return (
       <div>
-        <input type="text" placeholder="Type message" value={this.state.value} onChange={this.updaeInput} onKeyPress={this.keyPressed} />
+        <textarea type="text" placeholder="Type message" value={this.state.value} onChange={this.updaeInput} onKeyPress={this.keyPressed}></textarea>
         <div className="d-flex">
           <FontAwesomeIcon icon={['fas', 'font']} />
           <FontAwesomeIcon icon={['far', 'smile']} />

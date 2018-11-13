@@ -4,8 +4,8 @@ import { likeMessage, dislikeMessage, sendMessage } from "../actions/actionCreat
 
 const mapStateToProps = (state) => {
   return {
-    messages: state.messages,
-    user: state.user
+    messages: state.get('messages'),
+    user: state.get('user')
   };
 };
 
