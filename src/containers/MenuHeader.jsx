@@ -3,7 +3,7 @@ import { MenuHeader } from "../components/menu/MenuHeader";
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    user: state.get('user')
   };
 };
 

@@ -3,8 +3,8 @@ import { MenuChannelsList } from "../components/menu/MenuChannelsList";
 
 const mapStateToProps = (state) => {
   return {
-    channels: state.channels,
-    app: state.app
+    channels: state.get('channels'),
+    app: state.get('app')
   };
 };
 

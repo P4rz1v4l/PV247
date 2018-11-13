@@ -15,9 +15,9 @@ export class MenuChannelsList extends React.PureComponent {
         <div className="list">
           {this.props.channels.map((channel) => (
             <MenuChannelsListItem
-              key={channel.id}
-              name={channel.name}
-              active={(channel.id === this.props.app.actualChannelId)}
+              key={channel.get('id')}
+              name={channel.get('name')}
+              active={(channel.get('id') === this.props.app.get('actualChannelId'))}
             />
           ))
           }
