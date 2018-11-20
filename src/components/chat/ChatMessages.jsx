@@ -5,6 +5,14 @@ import { ChatMessage } from './ChatMessage';
 import {ChatInput} from "./ChatInput";
 
 export class ChatMessages extends React.PureComponent {
+  componentDidMount() {
+    this._scrollBarRef.scrollTop = this._scrollBarRef.scrollHeight;
+  }
+
+  componentDidUpdate() {
+    this._scrollBarRef.scrollTop = this._scrollBarRef.scrollHeight;
+  }
+
   render() {
     return (
       <div className="col-12 messages-container">
@@ -16,7 +24,11 @@ export class ChatMessages extends React.PureComponent {
         </div>
         <div className="body d-flex align-content-between flex-wrap">
           <div className="messages">
-            <PerfectScrollbar>
+            <PerfectScrollbar
+              containerRef={(ref) => {
+                this._scrollBarRef = ref;
+              }}
+            >
               {this.props.messages.map((message) => (
                 <ChatMessage
                   key={message.get('id')}
