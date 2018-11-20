@@ -38,6 +38,7 @@ export class ChatMessages extends React.PureComponent {
                   likes={message.get('likes')}
                   onLike={this.props.onLike}
                   onDislike={this.props.onDislike}
+                  onDeleteMessage={this.props.onDeleteMessage}
                 />
               ))
               }

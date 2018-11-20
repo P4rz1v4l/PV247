@@ -19,6 +19,10 @@ export class ChatMessage extends React.PureComponent {
               <div></div>
               <FontAwesomeIcon icon={['far', 'thumbs-up']} onClick={() => this.props.onLike(this.props.id)} />
             </div>
+
+            <div className="d-flex align-items-center trash">
+              <FontAwesomeIcon icon={['fas', 'times']} onClick={() => this.props.onDeleteMessage(this.props.id)} />
+            </div>
           </div>
           <div className="author-name">
             {this.props.author}
