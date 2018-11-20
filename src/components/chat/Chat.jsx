@@ -7,7 +7,7 @@ import { ChatInfos } from "./ChatInfos";
 
 import './chat.scss';
 
-const mql = window.matchMedia(`(min-width: 1200px)`);
+const mql = window.matchMedia(`(min-width: 1300px)`);
 
 export class Chat extends React.PureComponent {
   constructor(props) {
@@ -44,6 +44,7 @@ export class Chat extends React.PureComponent {
             docked={this.state.sidebarDocked}
             onSetOpen={this.onSetSidebarOpen}
             pullRight={true}
+            styles={{sidebar: {width: '350px'}}}
           >
             <ChatHeader />
             <ChatMessagesContainer />
