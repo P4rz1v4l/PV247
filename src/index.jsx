@@ -11,5 +11,6 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
 ReactDOM.render(<App />, document.getElementById('app-root'));
