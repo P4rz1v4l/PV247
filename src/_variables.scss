@@ -1,13 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600|Righteous&subset=latin-ext');
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700|Lora:700|Righteous&subset=latin-ext');
 
-$color-primary: #224762;
-$color-secondary: #FF4444;
+$color-primary: #383566;
+$color-primary-text: #2E2B54;
+$color-secondary: #F15066;
 $color-ternary: #6E4A61;
 
 $white-80: rgba(255, 255, 255, 0.8);
 $gray-80: rgba(0, 0, 0, 0.2);
 
-$font-family-primary: 'Open Sans', sans-serif;
+$font-family-primary: 'Lato', sans-serif;
 $font-family-secondary: 'Righteous', cursive;
 
 $menu-padding-leftright: 19px;

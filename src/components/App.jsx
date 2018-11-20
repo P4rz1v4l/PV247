@@ -53,6 +53,7 @@ export class App extends React.PureComponent {
           open={this.state.sidebarOpen}
           docked={this.state.sidebarDocked}
           onSetOpen={this.onSetSidebarOpen}
+          styles={{sidebar: {width: '270px'}}}
         >
           <div className="container-fluid">
             <div className="row">
