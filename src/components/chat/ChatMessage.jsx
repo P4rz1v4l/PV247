@@ -13,7 +13,7 @@ export class ChatMessage extends React.PureComponent {
         </div>
         <div className="body">
           <div className="icons d-flex">
-            <span>{this.props.likes}</span>
+            <span>{this.props.likes > 0 ? '+' + this.props.likes.toString() : this.props.likes}</span>
             <div className="d-flex align-items-center">
               <FontAwesomeIcon icon={['far', 'thumbs-down']} onClick={() => this.props.onDislike(this.props.id)} />
               <div></div>
