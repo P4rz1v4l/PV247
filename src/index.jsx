@@ -3,6 +3,7 @@ import {App} from "./components/App";
 import './index.scss';
 
 require.context('../public/', true);
+require.context('../public/media/img', true);
 
 // Enables ES7 features such as async/await in *.js/*.jsx code
 import 'babel-core/register';
@@ -11,6 +12,5 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
-import 'react-perfect-scrollbar/dist/css/styles.css';
 
 ReactDOM.render(<App />, document.getElementById('app-root'));

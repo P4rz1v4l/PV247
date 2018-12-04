@@ -1,0 +1,229 @@
+#login {
+  &.container-fluid {
+    height: auto;
+    max-width: 1600px;
+
+    &>.row {
+      height: auto;
+    }
+  }
+
+
+  /*
+  Header
+*/
+  .logo {
+    padding-left: 8vw;
+  }
+
+  .navbar {
+    padding: 50px 0;
+
+    .navbar-nav {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      list-style-type: none;
+
+      .nav-link {
+        padding: 5px 25px;
+        display: inline-block;
+        text-align: left;
+        text-decoration: none;
+        font-size: 17px;
+        letter-spacing: 0.02em;
+        font-family: Lato;
+        font-weight: 700;
+        color: #808080;
+      }
+
+      .nav-item {
+        &:first-child a {
+          padding-left: 6px;
+        }
+        a:hover {
+          text-decoration: none;
+          color: #F15066;
+        }
+      }
+    }
+  }
+
+  /*
+    Landing
+  */
+
+  #about {
+    h1 {
+      font-family: 'Lora', serif;
+      font-size: 72px;
+      line-height: 80px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #3C464D;
+      padding-top: 40px;
+    }
+
+    p {
+      max-width: 530px;
+      font-family: 'Lato', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #808080;
+      padding-top: 18px;
+    }
+
+    .img-clouds {
+      position: absolute;
+      top: -70px;
+      left: 0px;
+      z-index: -1;
+    }
+
+    .land-img {
+      padding-top: 25px;
+    }
+
+    .img-ground {
+      position: absolute;
+      bottom: 62px;
+      left: 0px;
+      z-index: -1;
+    }
+
+    .input-form {
+      margin-top: 25px;
+
+      input {
+        height: 60px;
+        width: 300px;
+        border: none;
+        padding-left: 15px;
+        font-family: 'Lato', sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        color: #808080;
+        background-color: #F8F9FF;
+        border-radius: 4px;
+      }
+
+      button {
+        height: 60px;
+        width: 140px;
+        margin-left: 10px;
+        border: none;
+        font-family: 'Lato', sans-serif;
+        font-size: 19px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        color: #fff;
+        background-color: #F15C70;
+        border-radius: 4px;
+        &:hover {
+          background-color: #F15066;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  /*
+    Landing
+  */
+
+  #partners {
+    h4 {
+      font-family: 'Lora', serif;
+      font-weight: 700;
+      font-size: 24px;
+      letter-spacing: 0.02em;
+      text-align: center;
+      margin-top: 120px;
+    }
+
+    img {
+      margin: 20px 35px;
+    }
+  }
+
+  /*
+    References
+  */
+
+  #references {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%), rgba(0, 26, 255, 0.03);
+    margin-top: 60px;
+
+    .ref-l {
+      position: absolute;
+      top: 60px;
+      right: 400px;
+    }
+
+    .ref-r {
+      position: absolute !important;
+      bottom: 40px;
+      right: 40px;
+    }
+
+    .ref-text {
+      padding-right: 100px;
+    }
+
+    h2 {
+      font-family: 'Lora', serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      color: #808080;
+      width: 100%;
+    }
+
+    p {
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      font-weight: 400;
+      color: #808080;
+    }
+
+    .ref-img img {
+      padding: 35px 0 0 45px;
+    }
+  }
+
+  /*
+    Benefits
+  */
+  #benefits {
+    .benefit-text .col-4 {
+      padding: 0 50px;
+    }
+
+    h2 {
+      font-family: 'Lato', sans-serif;
+      font-size: 36px;
+      letter-spacing: 0.02em;
+      font-weight: 700;
+      color: #3C464D;
+      margin-top: 110px;
+    }
+
+    p {
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: #808080;
+      width: 125px;
+      margin-bottom: 110px;
+    }
+  }
+
+
+
+}
+
+

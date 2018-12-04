@@ -1,0 +1,9 @@
+export const SEND_MESSAGE = 'SEND_MESSAGE';
+export const DELETE_MESSAGE = 'DELETE_MESSAGE';
+export const EDIT_MESSAGE = 'EDIT_MESSAGE';
+export const LIKE_MESSAGE = 'LIKE_MESSAGE';
+export const DISLIKE_MESSAGE = 'DISLIKE_MESSAGE';
+
+
+export const EDIT_USER_NAME = 'EDIT_USER_NAME';
+export const EDIT_USER_AVATAR = 'EDIT_USER_AVATAR';

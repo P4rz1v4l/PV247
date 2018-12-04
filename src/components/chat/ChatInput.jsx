@@ -32,12 +32,12 @@ export class ChatInput extends React.PureComponent {
     const replaced = this.state.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
     this.props.onSend(this.props.userName, replaced);
     this.setState({value: ''});
-  }
+  };
 
   render() {
     return (
       <div>
-        <textarea type="text" placeholder="Type message" value={this.state.value} onChange={this.updaeInput} onKeyPress={this.keyPressed}></textarea>
+        <textarea placeholder="Type message" value={this.state.value} onChange={this.updaeInput} onKeyPress={this.keyPressed}/>
         <div className="d-flex">
           <FontAwesomeIcon icon={['fas', 'font']} />
           <FontAwesomeIcon icon={['far', 'smile']} />
