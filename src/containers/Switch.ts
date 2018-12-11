@@ -5,7 +5,8 @@ import { userLogin } from '../actions/userActionCreator';
 
 const mapStateToProps = (state: any) => {
     return {
-        user: state.get('user')
+        user: state.get('user'),
+        app: state.get('app')
     };
 };
 

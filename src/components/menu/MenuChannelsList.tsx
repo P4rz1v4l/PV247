@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import { Map } from 'immutable';
 import { MenuChannelsListItem } from './MenuChannelsListItem';
 import * as Immutable from 'immutable';
 import { BeatLoader } from 'react-spinners';

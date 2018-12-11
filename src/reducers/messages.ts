@@ -8,7 +8,7 @@ import {
     EDIT_MESSAGE
 } from '../constants/messagesActionsTypes';
 
-export const messages = (prevState = {} as any, action: any) => {
+export const messages = (prevState: any, action: any) => {
     switch (action.type) {
         case SEND_MESSAGE: {
             const { id, text, author } = action.payload;

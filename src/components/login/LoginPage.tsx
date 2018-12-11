@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import './login.scss';
+import {BeatLoader} from 'react-spinners';
 
 interface ILoginPageState {
     inputValue: string;
@@ -8,6 +9,7 @@ interface ILoginPageState {
 
 interface ILoginPageProps {
     userLogin: (mail: string) => void;
+    userLoginProcess: boolean;
 }
 
 export class LoginPage extends React.PureComponent<ILoginPageProps, ILoginPageState> {
@@ -27,11 +29,12 @@ export class LoginPage extends React.PureComponent<ILoginPageProps, ILoginPageSt
     send = (event: React.FormEvent) => {
         event.preventDefault();
 
-        console.log(this.state.inputValue);
         this.props.userLogin(this.state.inputValue);
     };
 
     render() {
+        const disabled = this.props.userLoginProcess || !this.state.inputValue.trim().length || !this.state.inputValue.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+
         return (
             <div id="login" className="container-fluid">
 
@@ -82,7 +85,7 @@ export class LoginPage extends React.PureComponent<ILoginPageProps, ILoginPageSt
                             <div className="col-12 input-form">
                                 <form onSubmit={this.send}>
                                     <input value={this.state.inputValue} onChange={this.updateInput} type="email" placeholder="Enter your email" inputMode="email" />
-                                    <button type="submit">LOG IN</button>
+                                    <button type="submit" disabled={disabled}>{this.props.userLoginProcess ? <BeatLoader color={'#383566'} className={'loader'} /> : 'LOG IN'}</button>
                                 </form>
                             </div>
                         </div>

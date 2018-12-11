@@ -15,6 +15,7 @@ interface ISwitchState {
 
 export interface ISwitchStateProps {
     user: Immutable.Map<any, any>;
+    app: Immutable.Map<any, any>;
 }
 
 export interface ISwitchDispatchProps {
@@ -47,7 +48,12 @@ export class Switch extends React.PureComponent<ISwitchStateProps & ISwitchDispa
     };
 
     render(): JSX.Element {
-        let content = () => (<LoginPage userLogin={this.props.userLogin} />);
+        let content = () => (
+            <LoginPage
+                userLogin={this.props.userLogin}
+                userLoginProcess={this.props.app.get('userLoginProcess')}
+            />);
+
         if ( this.props.user.get('isLogged') ) {
             content = () => (
                 <Sidebar

@@ -2,8 +2,8 @@ import {
     CHANNELS_FETCH_SUCCESS,
 } from '../constants/channelsActionsTypes';
 import { Dispatch } from 'redux';
-import { AppId } from '../constants/appId';
 import { loadingChannels } from './appActionCreator';
+import {fetchChannelInfo} from '../util/fetchChannelInfo';
 
 
 
@@ -15,20 +15,11 @@ export const channelsFetchSuccess = (data: Array<{id: string; name: string; cust
 });
 
 export function fetchChannels(): any {
-    return (dispatch: Dispatch ) => {
+    return (dispatch: Dispatch, getState: () => any ) => {
         dispatch(loadingChannels(true));
 
-        fetch(
-            'https://pv247messaging.azurewebsites.net/api/v2/app/' + AppId + '/channel',
-            {
-                method: 'GET',
-                headers: {
-                    Authorization: `bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJsdWsua3JpemFuQGdtYWlsLmNvbSIsImp0aSI6Ijk4NDBlNmE0LTk2MGUtNDFkMy04YjdjLTdlOThmZTE2MjY4MCIsImlhdCI6MTU0Mzc3ODQwMSwibmJmIjoxNTQzNzc4NDAxLCJleHAiOjE1NDM4NjQ4MDEsImlzcyI6IlBWMjQ3IEFQSSIsImF1ZCI6IlBWMjQ3IFN0dWRlbnRzIn0.fIUx7wciTmQ_jNUaYPJ9LTa9t4VrWvfLKWp81BiZBxE`,
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                },
-            })
-            .then((response) => response.json())
+
+        fetchChannelInfo(getState().getIn(['user', 'token']))
             .then((data) => {
                 dispatch(channelsFetchSuccess(data));
                 dispatch(loadingChannels(false));

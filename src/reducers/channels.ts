@@ -3,7 +3,7 @@ import {
     CHANNELS_FETCH_SUCCESS,
 } from '../constants/channelsActionsTypes';
 
-export const channels = (prevState = {} as any, action: any) => {
+export const channels = (prevState: any, action: any) => {
     switch (action.type) {
         case CHANNELS_FETCH_SUCCESS: {
             const channelsArray: Array<Map<string, any>> = [];

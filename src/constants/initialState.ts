@@ -4,12 +4,15 @@ import { Map, List } from 'immutable';
 export const initialState = Map({
     app: Map({
         actualChannelId: '',
-        channelLoading: true
+        channelLoading: false,
+        userLoginProcess: false,
+        inCreateChannel: false,
     }),
     user: Map({
         isLogged: false,
-        mail: 'borokoso@gmail.com',
-        name: 'Boria'
+        email: '',
+        nick: '',
+        token: '',
     }),
     channels: List([]),
     messages: List([

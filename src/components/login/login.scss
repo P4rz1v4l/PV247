@@ -32,7 +32,7 @@
         text-decoration: none;
         font-size: 17px;
         letter-spacing: 0.02em;
-        font-family: Lato;
+        font-family: Lato, sans-serif;
         font-weight: 700;
         color: #808080;
       }
@@ -77,7 +77,7 @@
     .img-clouds {
       position: absolute;
       top: -70px;
-      left: 0px;
+      left: 0;
       z-index: -1;
     }
 
@@ -88,7 +88,7 @@
     .img-ground {
       position: absolute;
       bottom: 62px;
-      left: 0px;
+      left: 0;
       z-index: -1;
     }
 
@@ -121,6 +121,10 @@
         color: #fff;
         background-color: #F15C70;
         border-radius: 4px;
+        &[disabled]:hover {
+          background-color: #F15C70;
+          cursor: default;
+        }
         &:hover {
           background-color: #F15066;
           cursor: pointer;

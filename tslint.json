@@ -83,7 +83,7 @@
     "no-unnecessary-qualifier": true,
     "no-unsafe-finally": true,
     "no-default-export": true,
-    "no-require-imports": true,
+    "no-require-imports": false,
     "no-void-expression": [
       true,
       "ignore-arrow-function-shorthand"
