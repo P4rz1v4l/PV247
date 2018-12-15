@@ -1,18 +1,23 @@
 import { connect } from 'react-redux';
 import { MenuChannelsList, IMenuChannelsListStateProps, IMenuChannelsListDispatchProps } from '../components/menu/MenuChannelsList';
 import {Dispatch} from 'redux';
-import { fetchChannels } from '../actions/channelsActionCreator';
+import { channelsFetch } from '../actions/channelsActionCreator';
+import {changeChannel, toggleChannelCreate} from '../actions/appActionCreator';
+import {IState} from '../model/state';
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: IState) => {
     return {
-    channels: state.get('channels'),
-    app: state.get('app')
+        channels: state.channels,
+        channelLoading: state.app.channelLoading,
+        actualChannelId: state.app.actualChannelId,
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        fetchChannels: () => dispatch(fetchChannels())
+        fetchChannels: () => dispatch(channelsFetch()),
+        changeChannel: (channelsId: string) => dispatch(changeChannel(channelsId)),
+        toggleChannelCreate: (inCreateChannel: boolean) => dispatch(toggleChannelCreate(inCreateChannel)),
     };
 };
 

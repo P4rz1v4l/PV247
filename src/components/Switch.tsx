@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {Menu} from './menu/Menu';
-import {Chat} from './chat/Chat';
 import Sidebar from 'react-sidebar';
-import * as Immutable from 'immutable';
 import {LoginPage} from './login/LoginPage';
+import {ChatContainer} from '../containers/Chat';
+import {StateUserRecord} from '../model/stateUser';
+import {StateAppRecord} from '../model/stateApp';
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 
@@ -14,8 +15,8 @@ interface ISwitchState {
 }
 
 export interface ISwitchStateProps {
-    user: Immutable.Map<any, any>;
-    app: Immutable.Map<any, any>;
+    user: StateUserRecord;
+    app: StateAppRecord;
 }
 
 export interface ISwitchDispatchProps {
@@ -65,7 +66,7 @@ export class Switch extends React.PureComponent<ISwitchStateProps & ISwitchDispa
                 >
                     <div className="container-fluid">
                         <div className="row">
-                            <Chat />
+                            <ChatContainer />
                         </div>
                     </div>
                 </Sidebar>

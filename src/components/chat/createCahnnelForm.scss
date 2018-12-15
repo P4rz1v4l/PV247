@@ -1,0 +1,65 @@
+.content {
+  margin-top: 100px;
+}
+
+.create-form {
+  h2 {
+    font-family: 'Lato', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #2E2B53;
+    margin-bottom: 10px;
+  }
+  label {
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+    color: #2E2B53;
+    margin: 20px 0 3px 0;
+  }
+  input {
+    width: 100%;
+    height: 50px;
+    border: none;
+    padding-left: 15px;
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: #A7A7BA;
+    background-color: #F8F9FF;
+    border-radius: 4px;
+  }
+  .button-box {
+    text-align: right;
+  }
+  button {
+    height: 50px;
+    margin-top: 50px;
+    margin-left: 10px;
+    border: none;
+    font-family: 'Lato', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    border-radius: 4px;
+  }
+  .button1 {
+    width: 118px;
+    color: #636466;
+    background-color: #F8F9FF;
+    &:hover {
+      background-color: #F0F2FF;
+      cursor: pointer;
+    }
+  }
+  .button2 {
+    width: 200px;
+    color: #fff;
+    background-color: #F15C70;
+    &:hover {
+      background-color: #F13756;
+      cursor: pointer;
+    }
+  }
+}

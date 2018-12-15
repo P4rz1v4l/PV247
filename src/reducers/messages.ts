@@ -1,43 +1,37 @@
-import * as Immutable from 'immutable';
-import { Map } from 'immutable';
 import {
-    SEND_MESSAGE,
-    DELETE_MESSAGE,
-    LIKE_MESSAGE,
-    DISLIKE_MESSAGE,
-    EDIT_MESSAGE
+    LOAD_MESSAGES_SUCCESS, UPDATE_LOADED_MESSAGES_SUCCESS,
+    UPDATE_MESSAGE_SUCCESS,
 } from '../constants/messagesActionsTypes';
+import {IMessage, IStateMessages, MessageRecord} from '../model/stateMessages';
+import {OrderedMap} from 'immutable';
 
-export const messages = (prevState: any, action: any) => {
+export const messages = (prevState = OrderedMap({}) as IStateMessages, action: any) => {
     switch (action.type) {
-        case SEND_MESSAGE: {
-            const { id, text, author } = action.payload;
+        case LOAD_MESSAGES_SUCCESS: {
+            let messagesMap: IStateMessages = OrderedMap({});
 
-            return prevState.push(Map({
-                id, text, author, likes: 0
-            }));
+            action.payload.messages.reverse().forEach((message: IMessage) => {
+                messagesMap = messagesMap.set(message.id, new MessageRecord(message));
+            });
+
+            return messagesMap;
         }
 
-        case DELETE_MESSAGE: {
-            return prevState.filter((item: Immutable.Map<any, any>) => item.get('id') !== action.payload.id);
+        case UPDATE_MESSAGE_SUCCESS: {
+            return prevState.set(action.payload.message.id, new MessageRecord(action.payload.message));
         }
 
-        case EDIT_MESSAGE: {
-            const index = prevState.findIndex((item: Immutable.Map<any, any>) => item.get('id') === action.payload.id);
+        case UPDATE_LOADED_MESSAGES_SUCCESS: {
+            let messagesMap: IStateMessages = prevState;
 
-            return prevState.setIn([index, 'text'], action.payload.text);
-        }
+            action.payload.messages.reverse().forEach((message: IMessage) => {
+                // @ts-ignore
+                if (!messagesMap.has(message.id) || messagesMap.get(message.id).customData.timestamp !== message.customData.timestamp) {
+                    messagesMap = messagesMap.set(message.id, new MessageRecord(message));
+                }
+            });
 
-        case LIKE_MESSAGE: {
-            const index = prevState.findIndex((item: Immutable.Map<any, any>) => item.get('id') === action.payload.id);
-
-            return prevState.updateIn([index, 'likes'], (val: number) => val + 1);
-        }
-
-        case DISLIKE_MESSAGE: {
-            const index = prevState.findIndex((item: Immutable.Map<any, any>) => item.get('id') === action.payload.id);
-
-            return prevState.updateIn([index, 'likes'], (val: number) => val - 1);
+            return messagesMap;
         }
 
         default:

@@ -93,11 +93,19 @@
           word-wrap: break-word;
 
           &:hover {
-            background-color: #EDF1FC;
+            background-color: #EDF1FC !important;
 
             .icons {
               opacity: 1;
             }
+          }
+
+          &.positive {
+            background-color: #f8fff8;
+          }
+
+          &.negative {
+            background-color: #fff8f8;
           }
 
           .avatar {
@@ -136,6 +144,16 @@
               border-radius: 4px;
               box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.15);
 
+              .likeActive {
+                background-color: #33ff78;
+                border-radius: 0 4px 4px 0;
+              }
+
+              .dislikeActive {
+                background-color: #ff3b6c;
+                border-radius: 4px 0 0 4px;
+              }
+
               svg {
                 margin: 0 8px;
               }
@@ -172,6 +190,7 @@
 
         svg {
           margin: 4px;
+          cursor: pointer;
         }
       }
     }
@@ -188,6 +207,7 @@
         font-weight: 700;
         margin: 95px 24px 0 0;
         display: inline-block;
+        cursor: pointer;
 
           .highlight-line{
             position: relative;

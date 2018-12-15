@@ -1,9 +1,10 @@
 import * as React from 'react';
 import Sidebar from 'react-sidebar';
 
-import { ChatHeader } from './ChatHeader';
-import { ChatMessagesContainer} from '../../containers/ChatMessages';
-import { ChatInfos } from './ChatInfos';
+import {ChatHeaderContainer} from '../../containers/ChatHeader';
+import {ChatMessagesContainer} from '../../containers/ChatMessages';
+import {ChatInfo} from './ChatInfo';
+import {CreateChannelFormContainer} from '../../containers/CreateChannelForm';
 
 import './chat.scss';
 
@@ -14,8 +15,13 @@ interface IChatState {
     sidebarOpen: boolean;
 }
 
-export class Chat extends React.PureComponent<{}, IChatState> {
-    constructor(props: {}) {
+export interface IChatStateToProps {
+    inCreateChannel: boolean;
+    actualChannelId: string | null;
+}
+
+export class Chat extends React.PureComponent<IChatStateToProps, IChatState> {
+    constructor(props: IChatStateToProps) {
         super(props);
         this.state = {
             sidebarDocked: mql.matches,
@@ -40,22 +46,32 @@ export class Chat extends React.PureComponent<{}, IChatState> {
     };
 
     render(): JSX.Element {
-        return (
+        let content = () => (
             <div id="chat" className="col-12">
                 <div className="row align-content-start">
                     <Sidebar
-                        sidebar={<ChatInfos />}
+                        sidebar={<ChatInfo />}
                         open={this.state.sidebarOpen}
                         docked={this.state.sidebarDocked}
                         onSetOpen={this.onSetSidebarOpen}
                         pullRight
                         styles={{sidebar: {width: '350px'}}}
                     >
-                        <ChatHeader />
+                        <ChatHeaderContainer />
                         <ChatMessagesContainer />
                     </Sidebar>
                 </div>
             </div>
+        );
+
+        if (this.props.inCreateChannel || !this.props.actualChannelId ) {
+            content = () => (
+                <div id="chatCreate" className="col-12"><CreateChannelFormContainer /></div>
+            );
+        }
+
+        return (
+            content()
         );
     }
 }

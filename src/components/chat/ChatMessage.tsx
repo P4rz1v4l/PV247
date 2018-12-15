@@ -1,41 +1,97 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {MessageRecord} from '../../model/stateMessages';
+import {IApiMessage} from '../../util/fetchMessageUpdate';
 
 interface IChatMessageProps {
-    id: string;
-    likes: number;
-    author: string;
-    text: string;
-    onLike: (id: string) => void;
-    onDislike: (id: string) => void;
-    onDeleteMessage: (id: string) => void;
+    messageData: MessageRecord;
+    actualUser: string;
 }
 
-export class ChatMessage extends React.PureComponent<IChatMessageProps> {
+export interface ChatMessageStateToProps {
+    messageUpdating: boolean;
+}
+
+export interface ChatMessageDispatchToProps {
+    updateMessage: (newMessageData: IApiMessage, messageId: string) => void;
+    deleteMessage: (id: string) => void;
+}
+
+export class ChatMessage extends React.PureComponent<IChatMessageProps & ChatMessageStateToProps & ChatMessageDispatchToProps> {
+    onDislike = () => {
+        const message: IApiMessage = {
+            value: this.props.messageData.value,
+            customData: this.props.messageData.customData,
+        };
+
+        let index: number = this.props.messageData.customData.dislikes.indexOf(this.props.actualUser);
+        if ( index !== -1 ) {
+            message.customData.dislikes.splice(index, 1);
+        }
+        else {
+            message.customData.dislikes.push(this.props.actualUser);
+        }
+
+        index = this.props.messageData.customData.likes.indexOf(this.props.actualUser);
+        if ( index !== -1 ) {
+            message.customData.likes.splice(index, 1);
+        }
+
+        this.props.updateMessage(message, this.props.messageData.id);
+    };
+
+    onLike = () => {
+        const message: IApiMessage = {
+            value: this.props.messageData.value,
+            customData: this.props.messageData.customData,
+        };
+
+        let index: number = this.props.messageData.customData.likes.indexOf(this.props.actualUser);
+        if ( index !== -1 ) {
+            message.customData.likes.splice(index, 1);
+        }
+        else {
+            message.customData.likes.push(this.props.actualUser);
+        }
+
+        index = this.props.messageData.customData.dislikes.indexOf(this.props.actualUser);
+        if ( index !== -1 ) {
+            message.customData.dislikes.splice(index, 1);
+        }
+
+        this.props.updateMessage(message, this.props.messageData.id);
+    };
+
     render(): JSX.Element {
+        const likes = (this.props.messageData.get('customData').likes.length - this.props.messageData.get('customData').dislikes.length);
+
         return (
-            <div className="message d-flex">
+            <div className={likes > 0 ? 'message positive d-flex' : likes < 0 ? 'message negative d-flex' : 'message d-flex'}>
                 <div className="avatar">
                     <div className="image" />
                 </div>
                 <div className="body">
                     <div className="icons d-flex">
-                        <span>{this.props.likes > 0 ? '+' + this.props.likes.toString() : this.props.likes.toString()}</span>
+                        <span>{likes > 0 ? '+' + likes.toString() : likes.toString()}</span>
                         <div className="d-flex align-items-center">
-                            <i onClick={() => this.props.onDislike(this.props.id)}><FontAwesomeIcon icon={['far', 'thumbs-down']} /></i>
+                            <i className={this.props.messageData.customData.dislikes.indexOf(this.props.actualUser) !== -1 ? 'dislikeActive' : ''} onClick={this.onDislike}><FontAwesomeIcon icon={['far', 'thumbs-down']} /></i>
                             <div />
-                            <i onClick={() => this.props.onLike(this.props.id)}><FontAwesomeIcon icon={['far', 'thumbs-up']} /></i>
+                            <i className={this.props.messageData.customData.likes.indexOf(this.props.actualUser) !== -1 ? 'likeActive' : ''} onClick={this.onLike}><FontAwesomeIcon icon={['far', 'thumbs-up']} /></i>
                         </div>
 
-                        <div className="d-flex align-items-center trash">
-                            <i onClick={() => this.props.onDeleteMessage(this.props.id)}><FontAwesomeIcon icon={['fas', 'times']} /></i>
-                        </div>
+                        {this.props.messageData.createdBy === this.props.actualUser ?
+                            <div className="d-flex align-items-center trash">
+                                <i onClick={() => this.props.deleteMessage(this.props.messageData.get('id'))}><FontAwesomeIcon icon={['fas', 'times']} /></i>
+                            </div>
+                            :
+                            ''
+                        }
                     </div>
                     <div className="author-name">
-                        {this.props.author}
+                        {this.props.messageData.get('createdBy')}
                     </div>
                     <div className="text">
-                        {this.props.text}
+                        {this.props.messageData.get('value')}
                     </div>
                     <div className="attachments" />
                 </div>

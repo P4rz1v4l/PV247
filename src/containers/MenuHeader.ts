@@ -1,10 +1,20 @@
 import { connect } from 'react-redux';
-import { MenuHeader, IMenuHeaderStateProps } from '../components/menu/MenuHeader';
+import {MenuHeader, IMenuHeaderStateProps, IMenuHeaderDispatchToProps} from '../components/menu/MenuHeader';
+import {IState} from '../model/state';
+import {Dispatch} from 'redux';
+import {userChangeNick} from '../actions/userActionCreator';
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: IState) => {
     return {
-        user: state.get('user')
+        user: state.user,
+        userChangingName: state.app.userChangingName,
     };
 };
 
-export const MenuHeaderContainer = connect<IMenuHeaderStateProps>(mapStateToProps)(MenuHeader);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        userChangeNick: (nick: string) => dispatch(userChangeNick(nick)),
+    };
+};
+
+export const MenuHeaderContainer = connect<IMenuHeaderStateProps, IMenuHeaderDispatchToProps>(mapStateToProps, mapDispatchToProps)(MenuHeader);

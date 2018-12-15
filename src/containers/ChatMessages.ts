@@ -1,23 +1,21 @@
-import { connect } from 'react-redux';
-import { ChatMessages, IChatMessagesStateProps, IChatMessagesDispatchProps } from '../components/chat/ChatMessages';
-import { likeMessage, dislikeMessage, sendMessage, deleteMessage } from '../actions/messagesActionCreators';
+import {connect} from 'react-redux';
+import {ChatMessages, IChatMessagesDispatchToProps, IChatMessagesStateToProps} from '../components/chat/ChatMessages';
+import {IState} from '../model/state';
 import {Dispatch} from 'redux';
+import {updateLoadedMessages} from '../actions/messagesActionCreators';
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: IState) => {
     return {
-        messages: state.get('messages'),
-        user: state.get('user')
+        messages: state.messages,
+        messagesLoading: state.app.messagesLoading,
+        actualUser: state.user.email,
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-      onLike: (id: string) => dispatch(likeMessage(id)),
-      onDislike: (id: string) => dispatch(dislikeMessage(id)),
-      onSend: (author: string, text: string) => dispatch(sendMessage(author, text)),
-      onDeleteMessage: (id: string) => dispatch(deleteMessage(id))
-  };
+    return {
+        updateLoadedMessages: () => dispatch(updateLoadedMessages()),
+    };
 };
 
-
-export const ChatMessagesContainer = connect<IChatMessagesStateProps, IChatMessagesDispatchProps>(mapStateToProps, mapDispatchToProps)(ChatMessages);
+export const ChatMessagesContainer = connect<IChatMessagesStateToProps, IChatMessagesDispatchToProps>(mapStateToProps, mapDispatchToProps)(ChatMessages);

@@ -1,31 +1,31 @@
 import * as React from 'react';
-import * as Immutable from 'immutable';
 // @ts-ignore
 import ScrollArea from 'react-scrollbar';
 
-import { ChatMessage } from './ChatMessage';
-import {ChatInput} from './ChatInput';
+import {IStateMessages, MessageRecord} from '../../model/stateMessages';
+import {ChatMessageContainer} from '../../containers/ChatMessage';
+import {BeatLoader} from 'react-spinners';
+import {ChatInputContainer} from '../../containers/ChatInput';
 
-export interface IChatMessagesStateProps {
-    messages: Immutable.List<Immutable.Map<any, any>>;
-    user: Immutable.Map<any, any>;
+export interface IChatMessagesStateToProps {
+    messages: IStateMessages;
+    messagesLoading: boolean;
+    actualUser: string;
 }
 
-export interface IChatMessagesDispatchProps {
-    onLike: (id: string) => void;
-    onDislike: (id: string) => void;
-    onSend: (author: string, text: string) => void;
-    onDeleteMessage: (id: string) => void;
+export interface IChatMessagesDispatchToProps {
+    updateLoadedMessages: () => void;
 }
 
 interface IChatMessagesState {
     scroll: boolean;
 }
 
-export class ChatMessages extends React.PureComponent<IChatMessagesStateProps & IChatMessagesDispatchProps, IChatMessagesState> {
+export class ChatMessages extends React.PureComponent<IChatMessagesStateToProps & IChatMessagesDispatchToProps, IChatMessagesState> {
     _scrollBarRef: any;
+    _messageUpdater: any;
 
-    constructor(props: IChatMessagesStateProps & IChatMessagesDispatchProps) {
+    constructor(props: IChatMessagesStateToProps & IChatMessagesDispatchToProps) {
         super(props);
         this.state = {
             scroll: false
@@ -43,12 +43,10 @@ export class ChatMessages extends React.PureComponent<IChatMessagesStateProps & 
             this._scrollBarRef.scrollArea.scrollYTo(this._scrollBarRef.state.realHeight);
             this.setState(() => ({scroll: false}));
         }
-    }
 
-    onSend = (author: string, text: string) => {
-        this.setState(() => ({scroll: true}));
-        this.props.onSend(author, text);
-    };
+        clearInterval(this._messageUpdater);
+        this._messageUpdater = setInterval(this.props.updateLoadedMessages, 333);
+    }
 
     render() {
         return (
@@ -64,25 +62,20 @@ export class ChatMessages extends React.PureComponent<IChatMessagesStateProps & 
                         <ScrollArea ref={(ref: any) => {
                             this._scrollBarRef = ref;
                         }}>
-                            {this.props.messages.map((message: Immutable.Map<any, any>) => (
-                                <ChatMessage
-                                    key={message.get('id')}
-                                    id={message.get('id')}
-                                    author={message.get('author')}
-                                    text={message.get('text')}
-                                    likes={message.get('likes')}
-                                    onLike={this.props.onLike}
-                                    onDislike={this.props.onDislike}
-                                    onDeleteMessage={this.props.onDeleteMessage}
+                            {this.props.messagesLoading ?
+                                <BeatLoader color={'#f15066'} className={'loader'} />
+                                :
+                                this.props.messages.valueSeq().map((message: MessageRecord) => (
+                                <ChatMessageContainer
+                                    key={message.id}
+                                    messageData={message}
+                                    actualUser={this.props.actualUser}
                                 />
                             ))}
                         </ScrollArea>
                     </div>
                     <div className="input">
-                        <ChatInput
-                            userName={this.props.user.get('name')}
-                            onSend={this.onSend}
-                        />
+                        <ChatInputContainer />
                     </div>
                 </div>
             </div>

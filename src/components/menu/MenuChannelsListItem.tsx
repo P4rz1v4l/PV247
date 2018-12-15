@@ -2,14 +2,16 @@ import * as React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 interface IMenuChannelsListItemProps {
+    id: string;
     name: string;
     active: boolean;
+    changeChannel: (ChannelsId: string) => void;
 }
 
 export class MenuChannelsListItem extends React.PureComponent<IMenuChannelsListItemProps> {
     render() {
         return (
-            <div className={this.props.active ? 'd-flex align-items-stretch justify-content-between channel active' : 'd-flex align-items-stretch justify-content-between channel'}>
+            <div className={this.props.active ? 'd-flex align-items-stretch justify-content-between channel active' : 'd-flex align-items-stretch justify-content-between channel'} onClick={() => this.props.changeChannel(this.props.id)}>
                 <div>
                     <div className="d-flex align-items-start name">
                         <FontAwesomeIcon icon="comments" />
@@ -19,7 +21,7 @@ export class MenuChannelsListItem extends React.PureComponent<IMenuChannelsListI
                         </div>
                     </div>
                 </div>
-                <div className="d-flex align-items-center move">
+                <div className="d-flex align-items-center move" onClick={(event) => {event.stopPropagation(); }}>
                     ...
                 </div>
             </div>

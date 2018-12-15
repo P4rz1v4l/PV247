@@ -1,12 +1,15 @@
 import {
     USER_LOGIN_SUCCESS,
-    USER_LOGIN_FAILURE,
+    USER_LOGIN_FAILURE, USER_UPDATE_SUCCESS,
 } from '../constants/usersActionsTypes';
 import { Dispatch } from 'redux';
-import { loginningUser } from './appActionCreator';
+import {changingNameUser, loginningUser} from './appActionCreator';
 import {ApiError} from '../model/apiError';
-import {fetchLoginUserInfo, fetchUserLogin} from '../util/fetchUserLogin';
+import {fetchUserLogin} from '../util/fetchUserLogin';
 import {fetchUserSignup} from '../util/fetchUserSignup';
+import {fetchUserInfo} from '../util/fetchUserInfo';
+import {IState} from '../model/state';
+import {fetchUserUpdate} from '../util/fetchUserUpdate';
 
 
 const userLoginSucces = (userData: {email: string, customData: {nick: string, avatar: string, channelsOrder: string[]}}, loginData: {token: string; expiration: string} ): any => ({
@@ -27,13 +30,13 @@ const userLoginFail = (message: string): any => ({
     }
 });
 
-export function userLogin(email: string): any {
+export const userLogin = (email: string): any => {
     return (dispatch: Dispatch) => {
         dispatch(loginningUser(true));
 
         fetchUserLogin(email)
             .then((loginData) => {
-                fetchLoginUserInfo(email, loginData.token)
+                fetchUserInfo(email, loginData.token)
                     .then((userData) => {
                         dispatch(userLoginSucces(userData, loginData));
                         dispatch(loginningUser(false));
@@ -49,7 +52,7 @@ export function userLogin(email: string): any {
                         .then(() => {
                             fetchUserLogin(email)
                                 .then((loginData) => {
-                                    fetchLoginUserInfo(email, loginData.token)
+                                    fetchUserInfo(email, loginData.token)
                                         .then((userData) => {
                                             dispatch(userLoginSucces(userData, loginData));
                                             dispatch(loginningUser(false));
@@ -67,4 +70,33 @@ export function userLogin(email: string): any {
                 }
             });
     };
-}
+};
+
+const userUpdateSucces = (userData: {email: string, customData: {nick: string, avatar: string, channelsOrder: string[]}} ): any => ({
+    type: USER_UPDATE_SUCCESS,
+    payload: {
+        email: userData.email,
+        nick: userData.customData.nick,
+        avatar: userData.customData.avatar,
+        channelsOrder: userData.customData.channelsOrder,
+    }
+});
+
+export const userChangeNick = (nick: string): any => {
+    return (dispatch: Dispatch, getState: () => IState ) => {
+        dispatch(changingNameUser(true));
+
+        fetchUserInfo(getState().user.email, getState().user.token)
+            .then((userData) => {
+                fetchUserUpdate({...userData, customData: {...userData.customData, nick}}, getState().user.token)
+                    .then((newUserData) => {
+                        dispatch(userUpdateSucces(newUserData));
+                        dispatch(changingNameUser(false));
+                    });
+            })
+            .catch((errorSignup: ApiError) => {
+                console.log(errorSignup);
+                dispatch(changingNameUser(false));
+            });
+    };
+};

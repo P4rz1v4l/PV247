@@ -2,11 +2,12 @@ import { connect } from 'react-redux';
 import { Switch, ISwitchStateProps, ISwitchDispatchProps } from '../components/Switch';
 import { Dispatch } from 'redux';
 import { userLogin } from '../actions/userActionCreator';
+import {IState} from '../model/state';
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: IState) => {
     return {
-        user: state.get('user'),
-        app: state.get('app')
+        user: state.user,
+        app: state.app,
     };
 };
 
