@@ -34,11 +34,11 @@ export class MenuChannelsList extends React.PureComponent<IMenuChannelsListState
             if (channel.customData.users.indexOf(this.props.actualUser) > -1) {
                 return (
                     <MenuChannelsListItem
-                    key={channel.id}
-                    id={channel.id}
-                    name={channel.name}
-                    active={(channel.id === this.props.actualChannelId)}
-                    changeChannel={this.props.changeChannel}
+                        key={channel.id}
+                        id={channel.id}
+                        name={channel.name}
+                        active={(channel.id === this.props.actualChannelId)}
+                        changeChannel={this.props.changeChannel}
                     />
                 );
             }
