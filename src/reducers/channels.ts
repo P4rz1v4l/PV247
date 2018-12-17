@@ -1,8 +1,10 @@
-import { Map } from 'immutable';
+import {Map, Set} from 'immutable';
 import {IChannel, ChannelRecord, IStateChannels} from '../model/stateChannels';
 import {
-    CHANNELS_CREATE_SUCCESS,
+    CHANNEL_CREATE_SUCCESS,
+    CHANNEL_UPDATE_SUCCESS,
     CHANNELS_FETCH_SUCCESS,
+    CHANNELS_UPDATE_SUCCESS,
 } from '../constants/channelsActionsTypes';
 
 export const channels = (prevState = Map({}) as IStateChannels, action: any): IStateChannels => {
@@ -17,7 +19,32 @@ export const channels = (prevState = Map({}) as IStateChannels, action: any): IS
             return Map(channelsMap);
         }
 
-        case CHANNELS_CREATE_SUCCESS: {
+        case CHANNELS_UPDATE_SUCCESS: {
+            // let messagesMap: IStateMessages = OrderedMap({});
+            let channelMap: IStateChannels = prevState;
+            const arrayNewIds: string[] = [];
+
+            action.payload.channels.forEach((channel: IChannel) => {
+                // @ts-ignore
+                if (!channelMap.has(channel.id) || channelMap.get(channel.id).customData.timestamp !== channel.customData.timestamp) {
+                    channelMap = channelMap.set(channel.id, new ChannelRecord(channel));
+                }
+
+                arrayNewIds.push(channel.id);
+            });
+
+            Set(prevState.keys()).subtract(arrayNewIds).forEach((id: string) => {
+                channelMap = channelMap.delete(id);
+            });
+
+            return channelMap;
+        }
+
+        case CHANNEL_CREATE_SUCCESS: {
+            return prevState.set(action.payload.channel.id, new ChannelRecord(action.payload.channel));
+        }
+
+        case CHANNEL_UPDATE_SUCCESS: {
             return prevState.set(action.payload.channel.id, new ChannelRecord(action.payload.channel));
         }
 

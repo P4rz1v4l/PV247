@@ -3,7 +3,12 @@ import {
     APP_USER_LOGINNING,
     APP_CHANNEL_CHANGE,
     APP_TOGGLE_CHANNEL_CREATE,
-    APP_CHANNEL_CREATING, APP_USER_CHANGING_NAME, APP_MESSAGES_LOADING, APP_MESSAGE_SENDING, APP_MESSAGE_UPDATING,
+    APP_CHANNEL_CREATING,
+    APP_USER_CHANGING_NAME,
+    APP_MESSAGES_LOADING,
+    APP_MESSAGE_SENDING,
+    APP_MESSAGE_UPDATING,
+    APP_CHANNEL_UPDATING,
 } from '../constants/appActionsTypes';
 import {StateAppRecord} from '../model/stateApp';
 
@@ -19,6 +24,10 @@ export const app = (prevState = new StateAppRecord() as StateAppRecord, action: 
 
         case APP_CHANNEL_CREATING: {
             return prevState.set('channelCreating', action.payload.channelCreating);
+        }
+
+        case APP_CHANNEL_UPDATING: {
+            return prevState.set('channelUpdating', action.payload.channelUpdating);
         }
 
         case APP_CHANNEL_CHANGE: {

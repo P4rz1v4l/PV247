@@ -6,6 +6,7 @@ const mapStateToProps = (state: IState) => {
     return {
         chatName: state.channels.getIn([state.app.actualChannelId, 'name']),
         chatDesc: state.channels.getIn([state.app.actualChannelId, 'customData', 'description']),
+        channelUpdating: state.app.channelUpdating,
     };
 };
 

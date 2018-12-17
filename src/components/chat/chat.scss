@@ -34,20 +34,14 @@
       font-size: 24px;
       color: $color-primary-text;
       font-family: $font-family-secondary;
+      float: left;
     }
 
     svg {
       height: 16px;
       width: 16px;
-      margin: 2px 5px 0 5px;
+      margin: 5px 5px 0 5px;
       color: $color-primary-text;
-
-
-      &.star {
-        position: relative;
-        top: -1px;
-        fill: $color-secondary;
-      }
     }
 
     .description {
@@ -213,6 +207,147 @@
             position: relative;
             top: 2px;
           }
+      }
+    }
+
+    .user-list {
+      margin-top: 20px;
+      width: 300px;
+
+      .user-item {
+        width: 100%;
+        overflow: hidden;
+        cursor: pointer;
+
+        img {
+          width: 36px;
+          height: 36px;
+          float: left;
+          margin: 0 13px 20px 0;
+
+        }
+
+        h5 {
+          font-weight: 600;
+          font-size: 16px;
+          letter-spacing: 0.03em;
+          margin-bottom: 0px;
+        }
+
+        h6 {
+          font-size: 14px;
+          letter-spacing: 0.03em;
+          color: #6E8091;
+        }
+      }
+    }
+
+    .settings-form {
+      margin-top: 20px;
+      width: 300px;
+
+      h4 {
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: 0.02em;
+        margin-bottom: 6px;
+      }
+
+
+      .settings-line {
+        position: relative;
+        margin-bottom: 20px;
+
+        input {
+          width: 100%;
+          min-height: 45px;
+          background: #EDF1FC;
+          color: #2E2B54;
+          border: none;
+          border-radius: 2px;
+          padding: 0 58px 0 15px;
+          font-size: 16px;
+          letter-spacing: 0.02em;
+        }
+
+        textarea {
+          width: 100%;
+          height: 100px;
+          box-sizing: border-box;
+          resize: none;
+          background: #EDF1FC;
+          color: #2E2B54;
+          border: none;
+          border-radius: 2px;
+          padding: 8px 50px 0 15px;
+          font-size: 16px;
+          letter-spacing: 0.02em;
+          margin-bottom: -2px;
+        }
+
+        button {
+          position: absolute;
+          right: 0px;
+          width: 45px;
+          height: 100%;
+          border-radius: 0px 2px 2px 0px;
+          background: #F13756;
+          border: none;
+          cursor: pointer;
+
+          &:hover {
+            background: #F10028;
+          }
+
+          &::before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            display: block;
+            background: url("../../../public/media/img/ok.png") no-repeat center center;
+          }
+
+          &:disabled,
+          &[disabled]{
+            background-color: #cccccc;
+          }
+        }
+      }
+    }
+
+    .settings-menu {
+      margin-top: 20px;
+      width: 300px;
+
+      .settings-item {
+        width: 100%;
+        overflow: hidden;
+        padding: 6px 5px 0 0;
+        cursor: pointer;
+
+        &:hover {
+          background: #EDF1FC;
+          border-radius: 2px;
+        }
+
+        img {
+          float: left;
+          object-fit: none;
+          margin-right: 4px;
+        }
+
+        h5 {
+          font-weight: 600;
+          font-size: 18px;
+          letter-spacing: 0.03em;
+          margin-bottom: 2px;
+        }
+
+        h6 {
+          font-size: 12px;
+          letter-spacing: 0.03em;
+          color: #6E8091;
+        }
       }
     }
 

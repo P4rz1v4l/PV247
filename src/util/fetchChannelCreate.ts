@@ -13,7 +13,7 @@ export const fetchChannelCreate = (name: string, customData: IChannelCustomData,
         },
         body: JSON.stringify({
             name ,
-            customData
+            customData,
         })
     })
     .then((response) => validateResponse(response));

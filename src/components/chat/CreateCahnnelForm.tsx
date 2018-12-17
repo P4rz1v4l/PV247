@@ -50,7 +50,7 @@ export class CreateCahnnelForm extends React.PureComponent<ICreateCahnnelFormDis
     };
 
     render(): JSX.Element {
-        const disabled = !this.state.chdescValue.trim().length || !this.state.chnameValue.trim().length;
+        const disabled = !this.state.chnameValue.trim().length;
 
         return (
             <div className="row">
@@ -60,7 +60,7 @@ export class CreateCahnnelForm extends React.PureComponent<ICreateCahnnelFormDis
 
 
                         <div className="col-12 col-lg-7 create-form">
-                            <h2>CREATE</h2>
+                            <h2>CREATE CHANNEL</h2>
                             <form onSubmit={this.send}>
                                 <label htmlFor="chname">Name</label>
                                 <input type="text" id="chname" placeholder="Name of your channel" value={this.state.chnameValue} onChange={this.onChangeChname} />

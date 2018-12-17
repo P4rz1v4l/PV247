@@ -1,7 +1,7 @@
 import {
-    UPDATE_MESSAGE_SUCCESS,
-    LOAD_MESSAGES_SUCCESS,
-    UPDATE_LOADED_MESSAGES_SUCCESS,
+    MESSAGE_UPDATE_SUCCESS,
+    MESSAGES_LOAD_SUCCESS,
+    MESSAGES_UPDATE_SUCCESS,
 } from '../constants/messagesActionsTypes';
 import {IMessage} from '../model/stateMessages';
 import {Dispatch} from 'redux';
@@ -15,14 +15,14 @@ import {fetchMessagesInfo} from '../util/fetchMessagesInfo';
 
 
 export const loadMessagesSuccess = (messages: IMessage[]): any => ({
-    type: LOAD_MESSAGES_SUCCESS,
+    type: MESSAGES_LOAD_SUCCESS,
     payload: {
         messages
     }
 });
 
 export const updateLoadedMessagesSuccess = (messages: IMessage[]): any => ({
-    type: UPDATE_LOADED_MESSAGES_SUCCESS,
+    type: MESSAGES_UPDATE_SUCCESS,
     payload: {
         messages
     }
@@ -30,13 +30,15 @@ export const updateLoadedMessagesSuccess = (messages: IMessage[]): any => ({
 
 export const updateLoadedMessages = (): any => {
     return (dispatch: Dispatch, getState: () => IState ) => {
-        fetchMessagesInfo(getState().app.actualChannelId, getState().user.token)
-            .then((messages: IMessage[]) => {
-                dispatch(updateLoadedMessagesSuccess(messages));
-            })
-            .catch((errorSignup: ApiError) => {
-                console.log(errorSignup);
-            });
+        if (getState().app.actualChannelId !== null && getState().app.actualChannelId !== '') {
+            fetchMessagesInfo(getState().app.actualChannelId, getState().user.token)
+                .then((messages: IMessage[]) => {
+                    dispatch(updateLoadedMessagesSuccess(messages));
+                })
+                .catch((errorSignup: ApiError) => {
+                    console.log(errorSignup);
+                });
+        }
     };
 };
 
@@ -67,7 +69,7 @@ export const deleteMessage = (messageId: string): any => {
 };
 
 export const updateMessageSuccess = (message: IMessage): any => ({
-    type: UPDATE_MESSAGE_SUCCESS,
+    type: MESSAGE_UPDATE_SUCCESS,
     payload: {
         message
     }

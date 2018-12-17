@@ -28,25 +28,28 @@ export class ChatMessages extends React.PureComponent<IChatMessagesStateToProps 
     constructor(props: IChatMessagesStateToProps & IChatMessagesDispatchToProps) {
         super(props);
         this.state = {
-            scroll: false
+            scroll: true
         };
     }
 
     componentDidMount() {
         this._scrollBarRef.scrollArea.refresh();
         this._scrollBarRef.scrollArea.scrollYTo(this._scrollBarRef.state.realHeight);
+        this._messageUpdater = setInterval(this.props.updateLoadedMessages, 333);
     }
 
     componentDidUpdate() {
-        if (this.state.scroll) {
-            this._scrollBarRef.scrollArea.refresh();
-            this._scrollBarRef.scrollArea.scrollYTo(this._scrollBarRef.state.realHeight);
-            this.setState(() => ({scroll: false}));
-        }
-
-        clearInterval(this._messageUpdater);
-        this._messageUpdater = setInterval(this.props.updateLoadedMessages, 333);
+        this._scrollBarRef.scrollArea.refresh();
+        this._scrollBarRef.scrollArea.scrollYTo(this._scrollBarRef.state.realHeight);
     }
+
+    componentWillUnmount() {
+        clearInterval(this._messageUpdater);
+    }
+
+    setScroll = (scroll: boolean) => {
+        this.setState(() => ({scroll}));
+    };
 
     render() {
         return (

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {ChatInfoSettings} from './ChatInfoSettings';
 import {ChatInfoUserContainer} from '../../containers/ChatInfoUsers';
+import {ChatInfoSettingsContainer} from '../../containers/ChatInfoSettings';
 
 interface IChatInfoState {
     cardID: number;
@@ -29,7 +29,7 @@ export class ChatInfo extends React.PureComponent<{}, IChatInfoState> {
             }
 
             case 2: {
-                content = <ChatInfoSettings />;
+                content = <ChatInfoSettingsContainer />;
                 break;
             }
 

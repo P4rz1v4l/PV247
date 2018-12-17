@@ -16,8 +16,8 @@ export const fetchMessageCreate = (value: string, channelId: string | null, toke
                 likes: [],
                 dislikes: [],
                 attachments: [],
-                timestamp: new Date().getTime(),
-            }
+                timestamp: new Date().getTime().toString(),
+            },
         }),
     })
     .then((response) => validateResponse(response));

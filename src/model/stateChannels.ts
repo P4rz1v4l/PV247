@@ -4,6 +4,7 @@ export interface IChannelCustomData {
     owner: string;
     description: string;
     users: string[];
+    timestamp: string;
 }
 
 export interface IChannel {
@@ -19,13 +20,19 @@ const defaultChannel: IChannel = {
         owner: '',
         description: '',
         users: [],
+        timestamp: '',
     },
 };
 
 export class ChannelRecord extends Record(defaultChannel) implements IChannel {
     public id!: string;
     public name!: string;
-    public customData!: { description: string; users: string[]; owner: string};
+    public customData!: {
+        description: string;
+        users: string[];
+        owner: string;
+        timestamp: string;
+    };
 
     public constructor(values?: Partial<IChannel>) {
         values ? super(values) : super();

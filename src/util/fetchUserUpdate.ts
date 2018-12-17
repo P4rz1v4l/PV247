@@ -1,7 +1,7 @@
 import {MyAppId} from '../constants/myAppId';
 import {validateResponse} from './validateResponse';
 
-interface IApiUser {
+export interface IApiUser {
     email: string;
     customData: {
         nick: string;
@@ -19,6 +19,6 @@ export const fetchUserUpdate = (user: IApiUser, token: string) => fetch(
             'Content-Type': 'application/json',
             Accept: 'application/json',
         },
-        body: JSON.stringify(user)
+        body: JSON.stringify({customData: user.customData})
     })
     .then((response) => validateResponse(response));

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {MessageRecord} from '../../model/stateMessages';
 import {IApiMessage} from '../../util/fetchMessageUpdate';
 
-interface IChatMessageProps {
+interface IChatMessageOwnProps {
     messageData: MessageRecord;
     actualUser: string;
 }
@@ -17,7 +17,7 @@ export interface ChatMessageDispatchToProps {
     deleteMessage: (id: string) => void;
 }
 
-export class ChatMessage extends React.PureComponent<IChatMessageProps & ChatMessageStateToProps & ChatMessageDispatchToProps> {
+export class ChatMessage extends React.PureComponent<IChatMessageOwnProps & ChatMessageStateToProps & ChatMessageDispatchToProps> {
     onDislike = () => {
         const message: IApiMessage = {
             value: this.props.messageData.value,

@@ -9,10 +9,10 @@ import {fetchUserLogin} from '../util/fetchUserLogin';
 import {fetchUserSignup} from '../util/fetchUserSignup';
 import {fetchUserInfo} from '../util/fetchUserInfo';
 import {IState} from '../model/state';
-import {fetchUserUpdate} from '../util/fetchUserUpdate';
+import {fetchUserUpdate, IApiUser} from '../util/fetchUserUpdate';
 
 
-const userLoginSucces = (userData: {email: string, customData: {nick: string, avatar: string, channelsOrder: string[]}}, loginData: {token: string; expiration: string} ): any => ({
+const userLoginSucces = (userData: IApiUser, loginData: {token: string; expiration: string} ): any => ({
     type: USER_LOGIN_SUCCESS,
     payload: {
         email: userData.email,
@@ -34,45 +34,41 @@ export const userLogin = (email: string): any => {
     return (dispatch: Dispatch) => {
         dispatch(loginningUser(true));
 
-        fetchUserLogin(email)
-            .then((loginData) => {
-                fetchUserInfo(email, loginData.token)
-                    .then((userData) => {
-                        dispatch(userLoginSucces(userData, loginData));
-                        dispatch(loginningUser(false));
-                    })
-                    .catch((errorUsersInfo) => {
-                        dispatch(userLoginFail('Error: ' + errorUsersInfo.getCode().toString() + ' ' + errorUsersInfo.getMessage()));
-                        dispatch(loginningUser(false));
+        fetchUserSignup(email)
+            .then(() => {
+                fetchUserLogin(email)
+                    .then((loginData) => {
+                        fetchUserInfo(email, loginData.token)
+                            .then((userData: IApiUser) => {
+                                dispatch(userLoginSucces(userData, loginData));
+                                dispatch(loginningUser(false));
+                            });
                     });
             })
-            .catch((errorLogin: ApiError) => {
-                if (errorLogin.getCode() === 400) {
-                    fetchUserSignup(email)
-                        .then(() => {
-                            fetchUserLogin(email)
-                                .then((loginData) => {
-                                    fetchUserInfo(email, loginData.token)
-                                        .then((userData) => {
-                                            dispatch(userLoginSucces(userData, loginData));
-                                            dispatch(loginningUser(false));
-                                        });
+            .catch((errorSignup: ApiError) => {
+                if (errorSignup.getCode() === 400) {
+                    fetchUserLogin(email)
+                        .then((loginData) => {
+                            fetchUserInfo(email, loginData.token)
+                                .then((userData: IApiUser) => {
+                                    dispatch(userLoginSucces(userData, loginData));
+                                    dispatch(loginningUser(false));
                                 });
                         })
-                        .catch((errorSignup: ApiError) => {
-                            dispatch(userLoginFail('Error: ' + errorSignup.getCode().toString() + ' ' + errorSignup.getMessage()));
+                        .catch((errorLogin: ApiError) => {
+                            dispatch(userLoginFail('Error: ' + errorLogin.getCode().toString() + ' ' + errorLogin.getMessage()));
                             dispatch(loginningUser(false));
                         });
                 }
                 else {
-                    dispatch(userLoginFail('Error: ' + errorLogin.getCode().toString() + ' ' + errorLogin.getMessage()));
+                    dispatch(userLoginFail('Error: ' + errorSignup.getCode().toString() + ' ' + errorSignup.getMessage()));
                     dispatch(loginningUser(false));
                 }
             });
     };
 };
 
-const userUpdateSucces = (userData: {email: string, customData: {nick: string, avatar: string, channelsOrder: string[]}} ): any => ({
+export const userUpdateSucces = (userData: {email: string, customData: {nick: string, avatar: string, channelsOrder: string[]}} ): any => ({
     type: USER_UPDATE_SUCCESS,
     payload: {
         email: userData.email,

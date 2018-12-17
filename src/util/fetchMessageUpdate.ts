@@ -16,6 +16,6 @@ export const fetchMessageUpdate = (messageData: IApiMessage, messageId: string, 
             'Content-Type': 'application/json',
             Accept: 'application/json',
         },
-        body: JSON.stringify({...messageData, customData: {...messageData.customData, timestamp: new Date().getTime()}}),
+        body: JSON.stringify({...messageData, customData: {...messageData.customData, timestamp: new Date().getTime().toString()}}),
     })
     .then((response) => validateResponse(response));

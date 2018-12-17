@@ -121,13 +121,16 @@
         color: #fff;
         background-color: #F15C70;
         border-radius: 4px;
-        &[disabled]:hover {
-          background-color: #F15C70;
-          cursor: default;
-        }
+
         &:hover {
           background-color: #F15066;
           cursor: pointer;
+        }
+
+        &:disabled,
+        &[disabled],
+        &[disabled]:hover {
+          background-color: #cccccc;
         }
       }
     }

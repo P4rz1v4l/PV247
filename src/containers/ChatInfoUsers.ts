@@ -1,6 +1,8 @@
 import {IState} from '../model/state';
 import {connect} from 'react-redux';
-import {ChatInfoUsers, IChatInfosUsersStateToProps} from '../components/chat/ChatInfoUsers';
+import {ChatInfoUsers, IChatInfosUsersStateToProps, IChatInfoUsersDispatchToProps} from '../components/chat/ChatInfoUsers';
+import {Dispatch} from 'redux';
+import {channelInvite} from '../actions/channelsActionCreator';
 
 const mapStateToProps = (state: IState) => {
     return {
@@ -8,4 +10,10 @@ const mapStateToProps = (state: IState) => {
     };
 };
 
-export const ChatInfoUserContainer = connect<IChatInfosUsersStateToProps>(mapStateToProps)(ChatInfoUsers);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {
+        inviteUser: (email: string) => dispatch(channelInvite(email)),
+    };
+};
+
+export const ChatInfoUserContainer = connect<IChatInfosUsersStateToProps, IChatInfoUsersDispatchToProps>(mapStateToProps, mapDispatchToProps)(ChatInfoUsers);
