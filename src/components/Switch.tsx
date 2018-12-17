@@ -5,6 +5,7 @@ import {LoginPage} from './login/LoginPage';
 import {ChatContainer} from '../containers/Chat';
 import {StateUserRecord} from '../model/stateUser';
 import {StateAppRecord} from '../model/stateApp';
+import {ErrorsListContainer} from '../containers/errorsList';
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 
@@ -67,6 +68,8 @@ export class Switch extends React.PureComponent<ISwitchStateProps & ISwitchDispa
                     <div className="container-fluid">
                         <div className="row">
                             <ChatContainer />
+
+                            <ErrorsListContainer />
                         </div>
                     </div>
                 </Sidebar>

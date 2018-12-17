@@ -62,10 +62,10 @@ export const deleteMessage = (messageId: string): any => {
     return (dispatch: Dispatch, getState: () => IState ) => {
 
         fetchMessageDelete(messageId, getState().app.actualChannelId, getState().user.token)
-            .catch((errorSignup: ApiError) => {
-                console.log(errorSignup.getCode());
-                dispatch(errorAdd('Error: Delete Message'));
-                dispatch(updatingMessage(false));
+            .catch((error: ApiError) => {
+                if ('code' in error) {
+                    dispatch(errorAdd('Error: Delete Message'));
+                }
             });
     };
 };

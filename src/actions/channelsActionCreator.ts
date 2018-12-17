@@ -89,8 +89,9 @@ export const channelDelete = (channelId: string): any => {
 
         fetchChannelDelete(channelId, getState().user.token)
             .catch((error: ApiError) => {
-                console.log(error.getCode());
-                dispatch(errorAdd('Error: Delete channel'));
+                if ('code' in error) {
+                    dispatch(errorAdd('Error: Delete channel'));
+                }
             });
 
         dispatch(channelsLoadedUpdate());

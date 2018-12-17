@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import './login.scss';
 import {BeatLoader} from 'react-spinners';
+import {ErrorsListContainer} from '../../containers/errorsList';
 
 interface ILoginPageState {
     inputValue: string;
@@ -141,6 +142,8 @@ export class LoginPage extends React.PureComponent<ILoginPageProps, ILoginPageSt
                     <div className="col-3" />
                 </div>
 
+
+                <ErrorsListContainer />
             </div>
         );
     }
