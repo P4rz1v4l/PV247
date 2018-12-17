@@ -21,7 +21,7 @@ export class ErrorsListItem extends React.PureComponent<IErrorsListItem> {
         return (
             <div className="mt-auto error-item" onClick={this.destruction}>
                 <h2>Hmm...</h2>
-                <h4>Yes, channel name is mandatory!</h4>
+                <h4>{this.props.text}</h4>
             </div>
         );
     }
