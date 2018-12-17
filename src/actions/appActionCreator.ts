@@ -11,10 +11,10 @@ import {
 } from '../constants/appActionsTypes';
 import {Dispatch} from 'redux';
 import {IState} from '../model/state';
-import {ApiError} from '../model/apiError';
 import {fetchMessagesInfo} from '../util/fetchMessagesInfo';
 import {loadMessagesSuccess} from './messagesActionCreators';
 import {fetchChannelInfo} from '../util/fetchChannelInfo';
+import {errorAdd} from './errorsActionCreators';
 
 
 export const toggleChannelCreate = (inCreateChannel: boolean): any => ({
@@ -79,13 +79,13 @@ export const changeChannel = (channelsId: string): any => {
                             dispatch(loadMessagesSuccess(messages));
                             dispatch(loadingMessages(false));
                         })
-                        .catch((error: ApiError) => {
-                            console.log(error);
+                        .catch(() => {
+                            dispatch(errorAdd('Error: load messages'));
                             dispatch(loadingMessages(false));
                         });
                 })
-                .catch((errorSignup: ApiError) => {
-                    console.log(errorSignup);
+                .catch(() => {
+                    dispatch(errorAdd('Error: change channel'));
                 });
         }
         else {

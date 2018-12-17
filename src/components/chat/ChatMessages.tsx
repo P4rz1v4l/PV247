@@ -2,13 +2,13 @@ import * as React from 'react';
 // @ts-ignore
 import ScrollArea from 'react-scrollbar';
 
-import {IStateMessages, MessageRecord} from '../../model/stateMessages';
+import {StateMessages, MessageRecord} from '../../model/stateMessages';
 import {ChatMessageContainer} from '../../containers/ChatMessage';
 import {BeatLoader} from 'react-spinners';
 import {ChatInputContainer} from '../../containers/ChatInput';
 
 export interface IChatMessagesStateToProps {
-    messages: IStateMessages;
+    messages: StateMessages;
     messagesLoading: boolean;
     actualUser: string;
 }

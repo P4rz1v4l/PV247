@@ -1,14 +1,16 @@
 import {Map, OrderedMap, Record} from 'immutable';
 import {StateAppRecord} from './stateApp';
 import {StateUserRecord} from './stateUser';
-import {IStateChannels} from './stateChannels';
-import {IStateMessages} from './stateMessages';
+import {StateChannels} from './stateChannels';
+import {StateMessages} from './stateMessages';
+import {StateError} from './stateErrors';
 
 export interface IState {
     app: StateAppRecord;
     user: StateUserRecord;
-    channels: IStateChannels;
-    messages: IStateMessages;
+    channels: StateChannels;
+    messages: StateMessages;
+    errors: StateError;
 }
 
 const defaultState: IState = {
@@ -16,13 +18,15 @@ const defaultState: IState = {
     user: new StateUserRecord(),
     channels: Map({}),
     messages: OrderedMap({}),
+    errors: Map({}),
 };
 
 export class StateRecord extends Record(defaultState) implements IState {
     public app!: StateAppRecord;
     public user!: StateUserRecord;
-    public channels!: IStateChannels;
-    public messages!: IStateMessages;
+    public channels!: StateChannels;
+    public messages!: StateMessages;
+    public errors!: StateError;
 
     public constructor(values?: Partial<IState>) {
         values ? super(values) : super();

@@ -13,6 +13,8 @@ import {IState} from '../model/state';
 import {fetchChannelUpdate} from '../util/fetchChannelUpdate';
 import {fetchChannelInfo} from '../util/fetchChannelInfo';
 import {fetchChannelDelete} from '../util/fetchChannelDelete';
+import {errorAdd} from './errorsActionCreators';
+import {ApiError} from '../model/apiError';
 
 const channelsFetchSuccess = (channels: Array<IChannel>): any => ({
     type: CHANNELS_FETCH_SUCCESS,
@@ -31,8 +33,8 @@ export const channelsFetch = (): any  => {
                 dispatch(channelsFetchSuccess(data));
                 dispatch(loadingChannels(false));
             })
-            .catch((error) => {
-                console.log(error);
+            .catch(() => {
+                dispatch(errorAdd('Error: load channel'));
             });
     };
 };
@@ -75,8 +77,8 @@ export const channelCreate = (name: string, description: string): any => {
                 dispatch(creatingChannel(false));
                 dispatch(changeChannel(channelData.id));
             })
-            .catch((error) => {
-                console.log(error);
+            .catch(() => {
+                dispatch(errorAdd('Error: Create channel'));
             });
     };
 };
@@ -86,8 +88,9 @@ export const channelDelete = (channelId: string): any => {
         dispatch(changeChannel(''));
 
         fetchChannelDelete(channelId, getState().user.token)
-            .catch((error) => {
-                console.log(error);
+            .catch((error: ApiError) => {
+                console.log(error.getCode());
+                dispatch(errorAdd('Error: Delete channel'));
             });
 
         dispatch(channelsLoadedUpdate());
@@ -111,8 +114,8 @@ export const channelUpdate = (channelData: IChannel): any => {
                 dispatch(channelUpdateSuccess(data));
                 dispatch(updatingChannel(false));
             })
-            .catch((error) => {
-                console.log(error);
+            .catch(() => {
+                dispatch(errorAdd('Error: Update channel'));
                 dispatch(updatingChannel(false));
             });
     };
@@ -134,8 +137,8 @@ export const channelLeave = (channelId: string): any => {
                         });
                 }
             })
-            .catch((error) => {
-                console.log(error);
+            .catch(() => {
+                dispatch(errorAdd('Error: Leave channel'));
             });
     };
 };
@@ -153,8 +156,8 @@ export const channelInvite = (email: string): any => {
                         });
                 }
             })
-            .catch((error) => {
-                console.log(error);
+            .catch(() => {
+                dispatch(errorAdd('Error: Invite channel'));
             });
     };
 };

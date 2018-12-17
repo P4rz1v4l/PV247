@@ -1,5 +1,5 @@
 import {Map, Set} from 'immutable';
-import {IChannel, ChannelRecord, IStateChannels} from '../model/stateChannels';
+import {IChannel, ChannelRecord, StateChannels} from '../model/stateChannels';
 import {
     CHANNEL_CREATE_SUCCESS,
     CHANNEL_UPDATE_SUCCESS,
@@ -7,7 +7,7 @@ import {
     CHANNELS_UPDATE_SUCCESS,
 } from '../constants/channelsActionsTypes';
 
-export const channels = (prevState = Map({}) as IStateChannels, action: any): IStateChannels => {
+export const channels = (prevState = Map({}) as StateChannels, action: any): StateChannels => {
     switch (action.type) {
         case CHANNELS_FETCH_SUCCESS: {
             const channelsMap: any = {};
@@ -20,8 +20,7 @@ export const channels = (prevState = Map({}) as IStateChannels, action: any): IS
         }
 
         case CHANNELS_UPDATE_SUCCESS: {
-            // let messagesMap: IStateMessages = OrderedMap({});
-            let channelMap: IStateChannels = prevState;
+            let channelMap: StateChannels = prevState;
             const arrayNewIds: string[] = [];
 
             action.payload.channels.forEach((channel: IChannel) => {

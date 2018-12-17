@@ -1,4 +1,4 @@
-import {App} from "./components/App";
+import {App} from './components/App';
 
 import './index.scss';
 
@@ -9,8 +9,8 @@ require.context('../public/media/img', true);
 import 'babel-core/register';
 import 'babel-polyfill';
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 
 ReactDOM.render(<App />, document.getElementById('app-root'));

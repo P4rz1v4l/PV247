@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {MenuChannelsListItem} from './MenuChannelsListItem';
 import {BeatLoader} from 'react-spinners';
-import {ChannelRecord, IStateChannels} from '../../model/stateChannels';
+import {ChannelRecord, StateChannels} from '../../model/stateChannels';
 
 export interface IMenuChannelsListStateProps {
     channelLoading: boolean;
     actualChannelId: string | null;
-    channels: IStateChannels;
+    channels: StateChannels;
     actualUser: string;
 }
 

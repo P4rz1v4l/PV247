@@ -25,3 +25,4 @@ export class App extends React.PureComponent<{}, {}> {
         );
     }
 }
+

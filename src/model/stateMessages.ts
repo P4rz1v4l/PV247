@@ -51,4 +51,4 @@ export class MessageRecord extends Record(defaultMessage) implements IMessage {
     }
 }
 
-export type IStateMessages = OrderedMap<string, MessageRecord>;
+export type StateMessages = OrderedMap<string, MessageRecord>;

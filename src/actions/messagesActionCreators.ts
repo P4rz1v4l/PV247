@@ -12,6 +12,7 @@ import {fetchMessageCreate} from '../util/fetchMessageCreate';
 import {fetchMessageDelete} from '../util/fetchMessageDelete';
 import {fetchMessageUpdate, IApiMessage} from '../util/fetchMessageUpdate';
 import {fetchMessagesInfo} from '../util/fetchMessagesInfo';
+import {errorAdd} from './errorsActionCreators';
 
 
 export const loadMessagesSuccess = (messages: IMessage[]): any => ({
@@ -50,8 +51,8 @@ export const sendMessage = (value: string): any => {
             .then(() => {
                 dispatch(sendingMessage(false));
             })
-            .catch((errorSignup: ApiError) => {
-                console.log(errorSignup);
+            .catch(() => {
+                dispatch(errorAdd('Error: Send Message'));
                 dispatch(sendingMessage(false));
             });
     };
@@ -62,7 +63,8 @@ export const deleteMessage = (messageId: string): any => {
 
         fetchMessageDelete(messageId, getState().app.actualChannelId, getState().user.token)
             .catch((errorSignup: ApiError) => {
-                console.log(errorSignup);
+                console.log(errorSignup.getCode());
+                dispatch(errorAdd('Error: Delete Message'));
                 dispatch(updatingMessage(false));
             });
     };
@@ -84,8 +86,8 @@ export const updateMessage = (newMessageData: IApiMessage, messageId: string): a
                 dispatch(updateMessageSuccess(message));
                 dispatch(updatingMessage(false));
             })
-            .catch((errorSignup: ApiError) => {
-                console.log(errorSignup);
+            .catch(() => {
+                dispatch(errorAdd('Error: Update Message'));
                 dispatch(updatingMessage(false));
             });
     };

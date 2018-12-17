@@ -39,4 +39,4 @@ export class ChannelRecord extends Record(defaultChannel) implements IChannel {
     }
 }
 
-export type IStateChannels = Map<string, ChannelRecord>;
+export type StateChannels = Map<string, ChannelRecord>;

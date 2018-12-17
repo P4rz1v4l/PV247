@@ -1,6 +1,6 @@
 import {
     USER_LOGIN_SUCCESS,
-    USER_LOGIN_FAILURE, USER_UPDATE_SUCCESS,
+    USER_UPDATE_SUCCESS,
 } from '../constants/usersActionsTypes';
 import { Dispatch } from 'redux';
 import {changingNameUser, loginningUser} from './appActionCreator';
@@ -10,6 +10,7 @@ import {fetchUserSignup} from '../util/fetchUserSignup';
 import {fetchUserInfo} from '../util/fetchUserInfo';
 import {IState} from '../model/state';
 import {fetchUserUpdate, IApiUser} from '../util/fetchUserUpdate';
+import {errorAdd} from './errorsActionCreators';
 
 
 const userLoginSucces = (userData: IApiUser, loginData: {token: string; expiration: string} ): any => ({
@@ -20,13 +21,6 @@ const userLoginSucces = (userData: IApiUser, loginData: {token: string; expirati
         avatar: userData.customData.avatar,
         channelsOrder: userData.customData.channelsOrder,
         token: loginData.token
-    }
-});
-
-const userLoginFail = (message: string): any => ({
-    type: USER_LOGIN_FAILURE,
-    payload: {
-        message
     }
 });
 
@@ -55,13 +49,13 @@ export const userLogin = (email: string): any => {
                                     dispatch(loginningUser(false));
                                 });
                         })
-                        .catch((errorLogin: ApiError) => {
-                            dispatch(userLoginFail('Error: ' + errorLogin.getCode().toString() + ' ' + errorLogin.getMessage()));
+                        .catch(() => {
+                            dispatch(errorAdd('Error: Login account'));
                             dispatch(loginningUser(false));
                         });
                 }
                 else {
-                    dispatch(userLoginFail('Error: ' + errorSignup.getCode().toString() + ' ' + errorSignup.getMessage()));
+                    dispatch(errorAdd('Error: Login account'));
                     dispatch(loginningUser(false));
                 }
             });
@@ -90,8 +84,8 @@ export const userChangeNick = (nick: string): any => {
                         dispatch(changingNameUser(false));
                     });
             })
-            .catch((errorSignup: ApiError) => {
-                console.log(errorSignup);
+            .catch(() => {
+                dispatch(errorAdd('Error: Edit nick'));
                 dispatch(changingNameUser(false));
             });
     };

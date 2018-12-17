@@ -2,13 +2,13 @@ import {
     MESSAGES_LOAD_SUCCESS, MESSAGES_UPDATE_SUCCESS,
     MESSAGE_UPDATE_SUCCESS,
 } from '../constants/messagesActionsTypes';
-import {IMessage, IStateMessages, MessageRecord} from '../model/stateMessages';
+import {IMessage, StateMessages, MessageRecord} from '../model/stateMessages';
 import {OrderedMap, Set} from 'immutable';
 
-export const messages = (prevState = OrderedMap({}) as IStateMessages, action: any) => {
+export const messages = (prevState = OrderedMap({}) as StateMessages, action: any) => {
     switch (action.type) {
         case MESSAGES_LOAD_SUCCESS: {
-            let messagesMap: IStateMessages = OrderedMap({});
+            let messagesMap: StateMessages = OrderedMap({});
 
             action.payload.messages.reverse().forEach((message: IMessage) => {
                 messagesMap = messagesMap.set(message.id, new MessageRecord(message));
@@ -22,8 +22,7 @@ export const messages = (prevState = OrderedMap({}) as IStateMessages, action: a
         }
 
         case MESSAGES_UPDATE_SUCCESS: {
-            // let messagesMap: IStateMessages = OrderedMap({});
-            let messagesMap: IStateMessages = prevState;
+            let messagesMap: StateMessages = prevState;
             const arrayNewIds: string[] = [];
 
             action.payload.messages.reverse().forEach((message: IMessage) => {
