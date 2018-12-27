@@ -9,6 +9,7 @@ import {
     APP_MESSAGE_SENDING,
     APP_MESSAGE_UPDATING,
     APP_CHANNEL_UPDATING,
+    APP_USER_CHANGING_AVATAR,
 } from '../constants/appActionsTypes';
 import {StateAppRecord} from '../model/stateApp';
 
@@ -40,6 +41,10 @@ export const app = (prevState = new StateAppRecord() as StateAppRecord, action: 
 
         case APP_USER_CHANGING_NAME: {
             return prevState.set('userChangingName', action.payload.userChangingName);
+        }
+
+        case APP_USER_CHANGING_AVATAR: {
+            return prevState.set('userChangingAvatar', action.payload.userChangingAvatar);
         }
 
         case APP_MESSAGES_LOADING: {

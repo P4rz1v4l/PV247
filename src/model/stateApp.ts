@@ -8,6 +8,7 @@ interface IStateApp {
     userLoginProcess: boolean;
     inCreateChannel: boolean;
     userChangingName: boolean;
+    userChangingAvatar: boolean;
     messagesLoading: boolean;
     messageSending: boolean;
     messageUpdating: boolean;
@@ -21,6 +22,7 @@ const defaultStateApp: IStateApp = {
     userLoginProcess: false,
     inCreateChannel: true,
     userChangingName: false,
+    userChangingAvatar: false,
     messagesLoading: false,
     messageSending: false,
     messageUpdating: false,
@@ -34,6 +36,7 @@ export class StateAppRecord extends Record(defaultStateApp) implements IStateApp
     public userLoginProcess!: boolean;
     public inCreateChannel!: boolean;
     public userChangingName!: boolean;
+    public userChangingAvatar!: boolean;
     public messagesLoading!: boolean;
     public messageSending!: boolean;
     public messageUpdating!: boolean;

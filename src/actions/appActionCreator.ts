@@ -7,7 +7,7 @@ import {
     APP_USER_CHANGING_NAME,
     APP_MESSAGES_LOADING,
     APP_MESSAGE_SENDING,
-    APP_MESSAGE_UPDATING, APP_CHANNEL_UPDATING,
+    APP_MESSAGE_UPDATING, APP_CHANNEL_UPDATING, APP_USER_CHANGING_AVATAR,
 } from '../constants/appActionsTypes';
 import {Dispatch} from 'redux';
 import {IState} from '../model/state';
@@ -42,6 +42,13 @@ export const changingNameUser = (userChangingName: boolean): any => ({
     type: APP_USER_CHANGING_NAME,
     payload: {
         userChangingName
+    }
+});
+
+export const changingAvatarUser = (userChangingAvatar: boolean): any => ({
+    type: APP_USER_CHANGING_AVATAR,
+    payload: {
+        userChangingAvatar
     }
 });
 
