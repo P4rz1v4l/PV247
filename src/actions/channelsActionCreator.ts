@@ -148,7 +148,7 @@ export const channelInvite = (email: string): any => {
     return (dispatch: Dispatch, getState: () => IState ) => {
         fetchChannelInfo(getState().app.actualChannelId, getState().user.token)
             .then((channelData: IChannel) => {
-                if ( channelData.customData.users.indexOf(getState().user.email) === -1 ) {
+                if ( channelData.customData.users.indexOf(email) === -1 ) {
                     channelData.customData.users.push(email);
 
                     fetchChannelUpdate(channelData, getState().user.token)
