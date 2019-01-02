@@ -105,11 +105,10 @@
           .avatar {
             padding: 6px 10px 0 0;
 
-            .image {
-              height: 36px;
-              width: 36px;
+            img {
+              max-width: 35px;
+              max-height: 35px;
               border-radius: 2px;
-              background-color: #FF4444;
             }
           }
 
@@ -220,11 +219,11 @@
         cursor: pointer;
 
         img {
-          width: 36px;
-          height: 36px;
+          max-width: 36px;
+          max-height: 36px;
           float: left;
           margin: 0 13px 20px 0;
-
+          border-radius: 2px;
         }
 
         h5 {

@@ -15,4 +15,4 @@ export const fetchUserInfo = (email: string, token: string) => fetch(
     .then((response) => validateResponse(response));
 
 
-export const getUserInfo = memoize(fetchUserInfo);
+export const memoizeFetchUserInfo = memoize(fetchUserInfo, { promise: true, maxAge: 300000 });

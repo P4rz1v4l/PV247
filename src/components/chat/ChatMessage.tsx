@@ -2,6 +2,13 @@ import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {MessageRecord} from '../../model/stateMessages';
 import {IApiMessage} from '../../util/fetchMessageUpdate';
+import {memoizeFetchUserInfo} from '../../util/fetchUserInfo';
+import {IApiUser} from '../../util/fetchUserUpdate';
+
+interface IChatMessageState {
+    nick: string;
+    avatar: string;
+}
 
 interface IChatMessageOwnProps {
     messageData: MessageRecord;
@@ -10,6 +17,7 @@ interface IChatMessageOwnProps {
 
 export interface ChatMessageStateToProps {
     messageUpdating: boolean;
+    token: string;
 }
 
 export interface ChatMessageDispatchToProps {
@@ -17,7 +25,26 @@ export interface ChatMessageDispatchToProps {
     deleteMessage: (id: string) => void;
 }
 
-export class ChatMessage extends React.PureComponent<IChatMessageOwnProps & ChatMessageStateToProps & ChatMessageDispatchToProps> {
+export class ChatMessage extends React.PureComponent<IChatMessageOwnProps & ChatMessageStateToProps & ChatMessageDispatchToProps, IChatMessageState> {
+    constructor(props: IChatMessageOwnProps & ChatMessageStateToProps & ChatMessageDispatchToProps) {
+        super(props);
+
+        this.state = {
+            nick: '',
+            avatar: '',
+        };
+    }
+
+    componentDidMount() {
+        memoizeFetchUserInfo(this.props.messageData.createdBy, this.props.token)
+            .then((data: IApiUser) => {
+                this.setState(() => ({nick: data.customData.nick, avatar: data.customData.avatar}));
+            })
+            .catch(() => {
+                console.log('error');
+            });
+    }
+
     onDislike = () => {
         const message: IApiMessage = {
             value: this.props.messageData.value,
@@ -68,7 +95,7 @@ export class ChatMessage extends React.PureComponent<IChatMessageOwnProps & Chat
         return (
             <div className={likes > 0 ? 'message positive d-flex' : likes < 0 ? 'message negative d-flex' : 'message d-flex'}>
                 <div className="avatar">
-                    <div className="image" />
+                    <img src={this.state.avatar ? this.state.avatar : 'media/img/avatar.png'} />
                 </div>
                 <div className="body">
                     <div className="icons d-flex">
@@ -88,7 +115,7 @@ export class ChatMessage extends React.PureComponent<IChatMessageOwnProps & Chat
                         }
                     </div>
                     <div className="author-name">
-                        {this.props.messageData.get('createdBy')}
+                        {this.state.nick ? this.state.nick : this.props.messageData.get('createdBy')}
                     </div>
                     <div className="text">
                         {this.props.messageData.get('value')}

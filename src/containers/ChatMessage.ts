@@ -8,6 +8,7 @@ import {IState} from '../model/state';
 const mapStateToProps = (state: IState) => {
     return {
         messageUpdating: state.app.messageUpdating,
+        token: state.user.token,
     };
 };
 

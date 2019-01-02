@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {ChatInfoUsersItem} from './ChatInfoUsersItem';
 
 interface IChatInfoUsersState {
     emailValue: string;
@@ -6,6 +7,7 @@ interface IChatInfoUsersState {
 
 export interface IChatInfosUsersStateToProps {
     users: string[];
+    token: string;
 }
 
 export interface IChatInfoUsersDispatchToProps {
@@ -50,11 +52,7 @@ export class ChatInfoUsers extends React.PureComponent<IChatInfosUsersStateToPro
                 <div className="user-list">
                     {this.props.users.map((user) => {
                         return (
-                            <div key={user} className="user-item">
-                                <img src="media/img/avatar.png" />
-                                <h5>{user}</h5>
-                                <h6>{user}</h6>
-                            </div>
+                            <ChatInfoUsersItem key={user} email={user} token={this.props.token} />
                         );
                     })}
                 </div>

@@ -6,7 +6,8 @@ import {channelInvite} from '../actions/channelsActionCreator';
 
 const mapStateToProps = (state: IState) => {
     return {
-        users: state.channels.getIn([state.app.actualChannelId, 'customData', 'users'])
+        users: state.channels.getIn([state.app.actualChannelId, 'customData', 'users']),
+        token: state.user.token,
     };
 };
 
