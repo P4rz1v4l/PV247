@@ -3,7 +3,7 @@ import {
     MESSAGES_LOAD_SUCCESS,
     MESSAGES_UPDATE_SUCCESS,
 } from '../constants/messagesActionsTypes';
-import {IMessage} from '../model/stateMessages';
+import {IMessage, IMessageCustomDataAttachments} from '../model/stateMessages';
 import {Dispatch} from 'redux';
 import {IState} from '../model/state';
 import {ApiError} from '../model/apiError';
@@ -43,11 +43,11 @@ export const updateLoadedMessages = (): any => {
     };
 };
 
-export const sendMessage = (value: string): any => {
+export const sendMessage = (value: string, attachments: IMessageCustomDataAttachments[]): any => {
     return (dispatch: Dispatch, getState: () => IState ) => {
         dispatch(sendingMessage(true));
 
-        fetchMessageCreate(value, getState().app.actualChannelId, getState().user.token)
+        fetchMessageCreate(value, attachments, getState().app.actualChannelId, getState().user.token)
             .then(() => {
                 dispatch(sendingMessage(false));
             })

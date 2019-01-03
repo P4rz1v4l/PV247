@@ -54,8 +54,6 @@ export class MenuHeader extends React.PureComponent<IMenuHeaderStateProps & IMen
     };
 
     onFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.files);
-
         if (event.target.files !== null) {
             this.props.userChangeAvatar(event.target.files[0]);
         }

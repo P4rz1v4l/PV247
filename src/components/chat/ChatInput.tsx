@@ -1,63 +1,163 @@
 import * as React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {BeatLoader} from 'react-spinners';
+import {EditorState, RichUtils} from 'draft-js';
+// @ts-ignore
+import Editor from 'draft-js-plugins-editor';
+// @ts-ignore
+import createLinkifyPlugin from 'draft-js-linkify-plugin';
+// @ts-ignore
+import createEmojiPlugin from 'draft-js-emoji-plugin';
+// @ts-ignore
+import createAutoListPlugin from 'draft-js-autolist-plugin';
+// @ts-ignore
+import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
+import {createHighlightPlugin} from '../../driftPlugins/highlightPlugin';
+import {IMessageCustomDataAttachments} from '../../model/stateMessages';
+
+interface IMention {
+    name: string;
+}
 
 interface IChatInputState {
-    value: string;
+    editorState: any;
+    suggestions: IMention[];
+    attachments: IMessageCustomDataAttachments[];
 }
 
 export interface IChatInputStateToProps {
     messageSending: boolean;
+    mentions: IMention[];
 }
 
 export interface IChatInputDispatchToProps {
-    onSend: (value: string) => void;
+    onSend: (value: string, attachments: IMessageCustomDataAttachments[]) => void;
 }
 
+const linkifyPlugin = createLinkifyPlugin();
+const autoListPlugin = createAutoListPlugin();
+const highlightPlugin = createHighlightPlugin();
+const mentionPlugin = createMentionPlugin();
+const { MentionSuggestions } = mentionPlugin;
+const emojiPlugin = createEmojiPlugin();
+const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
+const plugins = [autoListPlugin, linkifyPlugin, highlightPlugin, emojiPlugin, mentionPlugin];
+
 export class ChatInput extends React.PureComponent<IChatInputDispatchToProps & IChatInputStateToProps, IChatInputState> {
+    private refEditor: any;
+    private refFileInput: HTMLInputElement;
+
     constructor(props: IChatInputDispatchToProps & IChatInputStateToProps) {
         super(props);
+
         this.state = {
-            value: ''
+            editorState: EditorState.createEmpty(),
+            suggestions: this.props.mentions,
+            attachments: [],
         };
     }
 
-    updateInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const value = event.target.value;
-
-        this.setState(() => ({value}));
+    onChange = (editorState: any) => {
+        this.setState((oldState) => ({
+            ...oldState,
+            editorState
+        }));
     };
 
-    keyPressed = (event: React.KeyboardEvent) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            if (!event.shiftKey) {
-                this.send();
-            }
-            else {
-                this.setState((state) => {
-                    return {value: state.value + '\r\n' };
-                });
-            }
+    onBoldClick = () => {
+        this.onChange(
+            RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD')
+        );
+    };
+
+    onItalicClick = () => {
+        this.onChange(
+            RichUtils.toggleInlineStyle(this.state.editorState, 'ITALIC')
+        );
+    };
+
+    onUnderlineClick = () => {
+        this.onChange(
+            RichUtils.toggleInlineStyle(this.state.editorState, 'UNDERLINE')
+        );
+    };
+
+    onStrikeThroughClick = () => {
+        this.onChange(
+            RichUtils.toggleInlineStyle(this.state.editorState, 'STRIKETHROUGH')
+        );
+    };
+
+    onHighlightClick = () => {
+        this.onChange(
+            RichUtils.toggleInlineStyle(this.state.editorState, 'HIGHLIGHT')
+        );
+    };
+
+    handleKeyCommand = (command: string) => {
+        const newState = RichUtils.handleKeyCommand(
+            this.state.editorState,
+            command
+        );
+        if (newState) {
+            this.onChange(newState);
+            return 'handled';
         }
+        return 'not-handled';
+    };
+
+    onSearchChange = ({value}: any) => {
+        const mentions = this.props.mentions;
+
+        this.setState((oldState) => ({
+            ...oldState,
+            suggestions: defaultSuggestionsFilter(value, mentions),
+        }));
+    };
+
+    focus = () => {
+        this.refEditor.focus();
+    };
+
+    onAttachmentClick = () => {
+        this.refFileInput.click();
+    };
+
+    onFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(event.target.files);
     };
 
     send = () => {
-        const replaced = this.state.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
-        this.props.onSend(replaced);
-        this.setState(() => ({value: '' }));
+        // this.props.onSend(replaced);
     };
 
     render() {
     return (
         <div>
-            <textarea placeholder="Type message" value={this.state.value} onChange={this.updateInput} onKeyPress={this.keyPressed}/>
+            <div onClick={this.focus}>
+                <Editor
+                    editorState={this.state.editorState}
+                    handleKeyCommand={this.handleKeyCommand}
+                    onChange={this.onChange}
+                    plugins={plugins}
+                    ref={(element: any) => { this.refEditor = element; }}
+                />
+                <MentionSuggestions
+                    onSearchChange={this.onSearchChange}
+                    suggestions={this.state.suggestions}
+                />
+                <EmojiSuggestions />
+            </div>
+
             <div className="d-flex">
-                <FontAwesomeIcon icon={['fas', 'font']} />
-                <FontAwesomeIcon icon={['far', 'smile']} />
-                <FontAwesomeIcon icon={['far', 'image']}/>
-                <FontAwesomeIcon icon={['far', 'file']}/>
-                <FontAwesomeIcon icon={['fas', 'at']}/>
+                <EmojiSelect />
+                <button title="CTRL + B" onClick={this.onBoldClick}><FontAwesomeIcon icon={['fas', 'bold']} /></button>
+                <button title="CTRL + I" onClick={this.onItalicClick}><FontAwesomeIcon icon={['fas', 'italic']} /></button>
+                <button title="CTRL + U" onClick={this.onUnderlineClick}><FontAwesomeIcon icon={['fas', 'underline']} /></button>
+                <button onClick={this.onStrikeThroughClick}><FontAwesomeIcon icon={['fas', 'strikethrough']} /></button>
+                <button title="CTRL + H" onClick={this.onHighlightClick}><FontAwesomeIcon icon={['fas', 'highlighter']} /></button>
+                <button onClick={this.onAttachmentClick}><FontAwesomeIcon icon={['fas', 'paperclip']}/></button>
+                <input type="file" ref={(input: HTMLInputElement) => this.refFileInput = input} onChange={this.onFileSelect}/>
 
                 {this.props.messageSending ? <BeatLoader color={'#383566'} className={'loader'} /> : ''}
 

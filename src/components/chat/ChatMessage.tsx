@@ -4,6 +4,7 @@ import {MessageRecord} from '../../model/stateMessages';
 import {IApiMessage} from '../../util/fetchMessageUpdate';
 import {memoizeFetchUserInfo} from '../../util/fetchUserInfo';
 import {IApiUser} from '../../util/fetchUserUpdate';
+// import Editor from 'draft-js-plugins-editor';
 
 interface IChatMessageState {
     nick: string;

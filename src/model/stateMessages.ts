@@ -1,9 +1,14 @@
 import { Record, OrderedMap } from 'immutable';
 
+export interface IMessageCustomDataAttachments {
+    link: string;
+    ext: string;
+}
+
 export interface IMessageCustomData {
     likes: string[];
     dislikes: string[];
-    attachments: string[];
+    attachments: IMessageCustomDataAttachments[];
     timestamp: string;
 }
 
@@ -42,7 +47,7 @@ export class MessageRecord extends Record(defaultMessage) implements IMessage {
     public customData: {
         likes: string[];
         dislikes: string[];
-        attachments: string[];
+        attachments: IMessageCustomDataAttachments[];
         timestamp: string;
     };
 

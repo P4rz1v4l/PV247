@@ -1,7 +1,8 @@
 import {MyAppId} from '../constants/myAppId';
 import {validateResponse} from './validateResponse';
+import {IMessageCustomDataAttachments} from '../model/stateMessages';
 
-export const fetchMessageCreate = (value: string, channelId: string | null, token: string) => fetch(
+export const fetchMessageCreate = (value: string, attachments: IMessageCustomDataAttachments[], channelId: string | null, token: string) => fetch(
     'https://pv247messaging.azurewebsites.net/api/v2/app/' + MyAppId + '/channel/' + channelId + '/message',
     {
         method: 'POST',
@@ -15,7 +16,7 @@ export const fetchMessageCreate = (value: string, channelId: string | null, toke
             customData: {
                 likes: [],
                 dislikes: [],
-                attachments: [],
+                attachments,
                 timestamp: new Date().getTime().toString(),
             },
         }),

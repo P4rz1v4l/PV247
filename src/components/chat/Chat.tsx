@@ -7,6 +7,7 @@ import {ChatInfo} from './ChatInfo';
 import {CreateChannelFormContainer} from '../../containers/CreateChannelForm';
 
 import './chat.scss';
+import './draft.css';
 
 const mql = window.matchMedia(`(min-width: 1300px)`);
 
