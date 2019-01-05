@@ -1,7 +1,8 @@
 import * as React from 'react';
+import * as Immutable from 'immutable';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {BeatLoader} from 'react-spinners';
-import {EditorState, RichUtils} from 'draft-js';
+import {EditorState, RichUtils, convertToRaw, ContentState} from 'draft-js';
 // @ts-ignore
 import Editor from 'draft-js-plugins-editor';
 // @ts-ignore
@@ -14,6 +15,7 @@ import createAutoListPlugin from 'draft-js-autolist-plugin';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import {createHighlightPlugin} from '../../driftPlugins/highlightPlugin';
 import {IMessageCustomDataAttachments} from '../../model/stateMessages';
+import {getDownloadLink, IApiFileInfo, IApiFileUri, uploadFile} from '../../util/uploadFile';
 
 interface IMention {
     name: string;
@@ -22,16 +24,18 @@ interface IMention {
 interface IChatInputState {
     editorState: any;
     suggestions: IMention[];
-    attachments: IMessageCustomDataAttachments[];
+    attachments: Immutable.List<IMessageCustomDataAttachments>;
 }
 
 export interface IChatInputStateToProps {
     messageSending: boolean;
     mentions: IMention[];
+    token: string;
 }
 
 export interface IChatInputDispatchToProps {
     onSend: (value: string, attachments: IMessageCustomDataAttachments[]) => void;
+    errorAdd: (text: string) => void;
 }
 
 const linkifyPlugin = createLinkifyPlugin();
@@ -53,7 +57,7 @@ export class ChatInput extends React.PureComponent<IChatInputDispatchToProps & I
         this.state = {
             editorState: EditorState.createEmpty(),
             suggestions: this.props.mentions,
-            attachments: [],
+            attachments: Immutable.List([]),
         };
     }
 
@@ -124,11 +128,29 @@ export class ChatInput extends React.PureComponent<IChatInputDispatchToProps & I
     };
 
     onFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.files);
+        if (event.target.files !== null) {
+            uploadFile(event.target.files[0], this.props.token)
+                .then((fileInfo: IApiFileInfo[]) => {
+                    getDownloadLink(fileInfo[0].id, this.props.token)
+                        .then((link: IApiFileUri) => {
+                            const attachments = this.state.attachments.push({name: fileInfo[0].name, link: link.fileUri, ext: fileInfo[0].extension});
+                            this.setState((oldState) => ({...oldState, attachments}));
+                        });
+                })
+                .catch(() => {
+                    this.props.errorAdd('Error: Upload file');
+            });
+        }
     };
 
     send = () => {
-        // this.props.onSend(replaced);
+        const contentState = this.state.editorState.getCurrentContent();
+        const value = JSON.stringify(convertToRaw(contentState));
+
+        this.props.onSend(value, this.state.attachments.toJSON());
+
+        const editorState = EditorState.push(this.state.editorState, ContentState.createFromText(''), 'adjust-depth');
+        this.setState((oldState) => ({...oldState, editorState}));
     };
 
     render() {
@@ -137,10 +159,11 @@ export class ChatInput extends React.PureComponent<IChatInputDispatchToProps & I
             <div onClick={this.focus}>
                 <Editor
                     editorState={this.state.editorState}
-                    handleKeyCommand={this.handleKeyCommand}
                     onChange={this.onChange}
+                    handleKeyCommand={this.handleKeyCommand}
                     plugins={plugins}
                     ref={(element: any) => { this.refEditor = element; }}
+                    placeholder="Text message"
                 />
                 <MentionSuggestions
                     onSearchChange={this.onSearchChange}
@@ -172,6 +195,12 @@ export class ChatInput extends React.PureComponent<IChatInputDispatchToProps & I
                 >
                     <path d="M0.00999999 18L21 9L0.00999999 0L0 7L15 9L0 11L0.00999999 18Z" fill="black"/>
                 </svg>
+            </div>
+
+            <div>
+                {this.state.attachments.map((item) => {
+                    return <span key={item.link}>{item.name}</span>;
+                })}
             </div>
         </div>
     );

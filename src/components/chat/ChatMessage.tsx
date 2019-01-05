@@ -4,7 +4,18 @@ import {MessageRecord} from '../../model/stateMessages';
 import {IApiMessage} from '../../util/fetchMessageUpdate';
 import {memoizeFetchUserInfo} from '../../util/fetchUserInfo';
 import {IApiUser} from '../../util/fetchUserUpdate';
-// import Editor from 'draft-js-plugins-editor';
+import {EditorState, convertFromRaw} from 'draft-js';
+// @ts-ignore
+import Editor from 'draft-js-plugins-editor';
+// @ts-ignore
+import createLinkifyPlugin from 'draft-js-linkify-plugin';
+// @ts-ignore
+import createEmojiPlugin from 'draft-js-emoji-plugin';
+// @ts-ignore
+import createAutoListPlugin from 'draft-js-autolist-plugin';
+// @ts-ignore
+import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
+import {createHighlightPlugin} from '../../driftPlugins/highlightPlugin';
 
 interface IChatMessageState {
     nick: string;
@@ -26,6 +37,13 @@ export interface ChatMessageDispatchToProps {
     deleteMessage: (id: string) => void;
 }
 
+const linkifyPlugin = createLinkifyPlugin();
+const autoListPlugin = createAutoListPlugin();
+const highlightPlugin = createHighlightPlugin();
+const mentionPlugin = createMentionPlugin();
+const emojiPlugin = createEmojiPlugin();
+const plugins = [autoListPlugin, linkifyPlugin, highlightPlugin, emojiPlugin, mentionPlugin];
+
 export class ChatMessage extends React.PureComponent<IChatMessageOwnProps & ChatMessageStateToProps & ChatMessageDispatchToProps, IChatMessageState> {
     constructor(props: IChatMessageOwnProps & ChatMessageStateToProps & ChatMessageDispatchToProps) {
         super(props);
@@ -45,6 +63,10 @@ export class ChatMessage extends React.PureComponent<IChatMessageOwnProps & Chat
                 console.log('error');
             });
     }
+
+    onChange = (editorState: any) => {
+        return editorState;
+    };
 
     onDislike = () => {
         const message: IApiMessage = {
@@ -119,9 +141,18 @@ export class ChatMessage extends React.PureComponent<IChatMessageOwnProps & Chat
                         {this.state.nick ? this.state.nick : this.props.messageData.get('createdBy')}
                     </div>
                     <div className="text">
-                        {this.props.messageData.get('value')}
+                        <Editor
+                            editorState={EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.messageData.value)))}
+                            onChange={this.onChange}
+                            readOnly
+                            plugins={plugins}
+                        />
                     </div>
-                    <div className="attachments" />
+                    <div className="attachments">
+                        {this.props.messageData.customData.attachments.map((attachment) => {
+                            return <a href={attachment.link} key={attachment.link} target="_blank">{attachment.name}</a>;
+                        })}
+                    </div>
                 </div>
             </div>
         );

@@ -1,6 +1,7 @@
 import { Record, OrderedMap } from 'immutable';
 
 export interface IMessageCustomDataAttachments {
+    name: string;
     link: string;
     ext: string;
 }
