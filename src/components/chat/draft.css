@@ -1,19 +1,34 @@
+.input button {
+    border: none;
+    border-radius: 0.5em;
+    background: none;
+    color: #383566;
+    cursor: pointer;
+}
+
+.input button:hover {
+    background: #edf1fc;
+}
+
+.input button:active {
+    background: #d4defa;
+}
+
 .draftJsEmojiPlugin__emojiSelect__34S1B {
     display: inline-block;
 }
 
 .draftJsEmojiPlugin__emojiSelectButton__3sPol, .draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu {
     margin: 0;
-    padding: 0;
-    width: 2.5em;
+    width: 1.6em;
     height: 1.5em;
     box-sizing: border-box;
     line-height: 1.2em;
-    font-size: 1.5em;
-    color: #888;
+    font-size: 1.8em;
+    color: #383566;
     background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 1.5em;
+    border: none;
+    border-radius: 0.5em;
     cursor: pointer;
 }
 
@@ -23,11 +38,11 @@
 }
 
 .draftJsEmojiPlugin__emojiSelectButton__3sPol:hover, .draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu:hover {
-    background: #f3f3f3;
+    background: #edf1fc;
 }
 
 .draftJsEmojiPlugin__emojiSelectButton__3sPol:active, .draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu:active {
-    background: #e6e6e6;
+    background: #d4defa;
 }
 
 .draftJsEmojiPlugin__emojiSelectButtonPressed__2Tezu {
@@ -35,9 +50,10 @@
 }
 
 .draftJsEmojiPlugin__emojiSelectPopover__1J1s0 {
-    margin-top: 10px;
+    margin: 0 0 80px 10px;
     padding: 0 .3em;
     position: absolute;
+    bottom: 0px;
     z-index: 1000;
     box-sizing: content-box;
     background: #fff;
@@ -64,7 +80,7 @@
     position: relative;
     z-index: 0;
     width: 21em;
-    height: 20em;
+    height: 8em;
 }
 
 .draftJsEmojiPlugin__emojiSelectPopoverGroup__3zwcE {
@@ -183,14 +199,14 @@
     top: .3em;
     bottom: .3em;
     width: .25em;
-    background-color: #e0e0e0;
+    background-color: #edf1fc;
     border-radius: .125em;
-    opacity: .1;
+    opacity: .4;
     transition: opacity .4s;
 }
 
 .draftJsEmojiPlugin__emojiSelectPopoverScrollbarThumb__jGYdG {
-    background-color: #000;
+    background-color: #f15066;
     border-radius: .125em;
     cursor: pointer;
 }
