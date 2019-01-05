@@ -167,6 +167,33 @@
           .text {
             font-size: 14px;
           }
+
+          .attachments {
+            .attachment {
+              display: inline-block;
+              width: 100px;
+              color: #000;
+
+              div:first-child {
+                height: 50px;
+                vertical-align: center;
+              }
+
+              div {
+                text-align: center;
+              }
+
+              i {
+                font-size: 30px;
+              }
+
+              img {
+                max-height: 50px;
+                max-width: 90px;
+                margin: auto;
+              }
+            }
+          }
         }
       }
 
@@ -174,11 +201,14 @@
         width: 100%;
         margin: 40px 75px;
 
-        textarea {
-          width: 100%;
-          padding: 8px 16px;
-          border: none;
-          background-color: #EDF1FC;
+        .editor {
+          max-height: 72px;
+          overflow: auto;
+        }
+
+        .attachment {
+          font-weight: bold;
+          padding: 2px 5px;
         }
 
         svg {

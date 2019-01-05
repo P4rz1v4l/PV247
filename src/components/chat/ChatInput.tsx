@@ -41,9 +41,29 @@ export interface IChatInputDispatchToProps {
 const linkifyPlugin = createLinkifyPlugin();
 const autoListPlugin = createAutoListPlugin();
 const highlightPlugin = createHighlightPlugin();
-const mentionPlugin = createMentionPlugin();
+const mentionPlugin = createMentionPlugin({
+    positionSuggestions: (settings: any) => {
+        return {
+            top: settings.decoratorRect.top - 80 + 'px', // change this value (40) for manage the distance between cursor and bottom edge of popover
+            display: 'block',
+            transform: 'scale(1) translateY(-100%)', // transition popover on the value of its height
+            transformOrigin: '1em 0% 0px',
+            transition: 'all 0.25s cubic-bezier(0.3, 1.2, 0.2, 1)'
+        };
+    }
+});
 const { MentionSuggestions } = mentionPlugin;
-const emojiPlugin = createEmojiPlugin();
+const emojiPlugin = createEmojiPlugin({
+    positionSuggestions: (settings: any) => {
+        return {
+            top: settings.decoratorRect.top - 105 + 'px', // change this value (40) for manage the distance between cursor and bottom edge of popover
+            display: 'block',
+            transform: 'scale(1) translateY(-100%)', // transition popover on the value of its height
+            transformOrigin: '1em 0% 0px',
+            transition: 'all 0.25s cubic-bezier(0.3, 1.2, 0.2, 1)'
+        };
+    }
+});
 const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
 const plugins = [autoListPlugin, linkifyPlugin, highlightPlugin, emojiPlugin, mentionPlugin];
 
@@ -156,7 +176,7 @@ export class ChatInput extends React.PureComponent<IChatInputDispatchToProps & I
     render() {
     return (
         <div>
-            <div onClick={this.focus}>
+            <div onClick={this.focus} className="editor">
                 <Editor
                     editorState={this.state.editorState}
                     onChange={this.onChange}
@@ -199,7 +219,7 @@ export class ChatInput extends React.PureComponent<IChatInputDispatchToProps & I
 
             <div>
                 {this.state.attachments.map((item) => {
-                    return <span key={item.link}>{item.name}</span>;
+                    return <span key={item.link} className="attachment">{item.name}</span>;
                 })}
             </div>
         </div>

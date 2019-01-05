@@ -150,7 +150,46 @@ export class ChatMessage extends React.PureComponent<IChatMessageOwnProps & Chat
                     </div>
                     <div className="attachments">
                         {this.props.messageData.customData.attachments.map((attachment) => {
-                            return <a href={attachment.link} key={attachment.link} target="_blank">{attachment.name}</a>;
+                            if (attachment.ext.toLowerCase().match(/.png|.jpg|.jpeg|.gif|.bmp/i)) {
+                                return <a href={attachment.link} key={attachment.link} className="attachment" target="_blank">
+                                    <div>
+                                        <div className="d-flex justify-content-center align-items-center"><img src={attachment.link}/></div>
+                                        <div>{attachment.name}</div>
+                                    </div>
+                                </a>;
+                            }
+                            else if (attachment.ext.toLowerCase().match(/.pdf/i)) {
+                                return <a href={attachment.link} key={attachment.link} className="attachment" target="_blank">
+                                    <div>
+                                        <div className="d-flex justify-content-center align-items-center"><i><FontAwesomeIcon icon={['far', 'file-pdf']} /></i></div>
+                                        <div>{attachment.name}</div>
+                                    </div>
+                                </a>;
+                            }
+                            else if (attachment.ext.toLowerCase().match(/.doc|.docx/i)) {
+                                return <a href={attachment.link} key={attachment.link} className="attachment" target="_blank">
+                                    <div>
+                                        <div className="d-flex justify-content-center align-items-center"><i><FontAwesomeIcon icon={['far', 'file-word']} /></i></div>
+                                        <div>{attachment.name}</div>
+                                    </div>
+                                </a>;
+                            }
+                            else if (attachment.ext.toLowerCase().match(/.xls|.xlsx/i)) {
+                                return <a href={attachment.link} key={attachment.link} className="attachment" target="_blank">
+                                    <div>
+                                        <div className="d-flex justify-content-center align-items-center"><i><FontAwesomeIcon icon={['far', 'file-excel']} /></i></div>
+                                        <div>{attachment.name}</div>
+                                    </div>
+                                </a>;
+                            }
+                            else {
+                                return <a href={attachment.link} key={attachment.link} className="attachment" target="_blank">
+                                    <div>
+                                        <div className="d-flex justify-content-center align-items-center"><i><FontAwesomeIcon icon={['far', 'file']} /></i></div>
+                                        <div>{attachment.name}</div>
+                                    </div>
+                                </a>;
+                            }
                         })}
                     </div>
                 </div>
