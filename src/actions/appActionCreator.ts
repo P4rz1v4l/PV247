@@ -74,14 +74,14 @@ export const changedChannel = (channelsId: string): any => ({
 });
 
 export const changeChannel = (channelsId: string): any => {
-    return (dispatch: Dispatch, getState: () => IState ) => {
+    return (dispatch: Dispatch, getState: () => IState) => {
         if (channelsId !== '') {
-            fetchChannelInfo(channelsId, getState().user.token)
+            return fetchChannelInfo(channelsId, getState().user.token)
                 .then(() => {
                     dispatch(changedChannel(channelsId));
                     dispatch(loadingMessages(true));
 
-                    fetchMessagesInfo(channelsId, getState().user.token)
+                    return fetchMessagesInfo(channelsId, getState().user.token)
                         .then((messages) => {
                             dispatch(loadMessagesSuccess(messages));
                             dispatch(loadingMessages(false));
@@ -97,6 +97,7 @@ export const changeChannel = (channelsId: string): any => {
         }
         else {
             dispatch(changedChannel(channelsId));
+            return null;
         }
     };
 };

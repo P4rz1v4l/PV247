@@ -10,7 +10,8 @@ import {ApiError} from '../model/apiError';
 import {sendingMessage, updatingMessage} from './appActionCreator';
 import {fetchMessageCreate} from '../util/fetchMessageCreate';
 import {fetchMessageDelete} from '../util/fetchMessageDelete';
-import {fetchMessageUpdate, IApiMessage} from '../util/fetchMessageUpdate';
+import {fetchMessageUpdate} from '../util/fetchMessageUpdate';
+import {IApiMessage} from '../util/apiInterfaces';
 import {fetchMessagesInfo} from '../util/fetchMessagesInfo';
 import {errorAdd} from './errorsActionCreators';
 
@@ -30,9 +31,9 @@ export const updateLoadedMessagesSuccess = (messages: IMessage[]): any => ({
 });
 
 export const updateLoadedMessages = (): any => {
-    return (dispatch: Dispatch, getState: () => IState ) => {
+    return (dispatch: Dispatch, getState: () => IState) => {
         if (getState().app.actualChannelId !== null && getState().app.actualChannelId !== '') {
-            fetchMessagesInfo(getState().app.actualChannelId, getState().user.token)
+            return fetchMessagesInfo(getState().app.actualChannelId, getState().user.token)
                 .then((messages: IMessage[]) => {
                     dispatch(updateLoadedMessagesSuccess(messages));
                 })
@@ -40,14 +41,16 @@ export const updateLoadedMessages = (): any => {
                     console.log(errorSignup);
                 });
         }
+
+        return null;
     };
 };
 
 export const sendMessage = (value: string, attachments: IMessageCustomDataAttachments[]): any => {
-    return (dispatch: Dispatch, getState: () => IState ) => {
+    return (dispatch: Dispatch, getState: () => IState) => {
         dispatch(sendingMessage(true));
 
-        fetchMessageCreate(value, attachments, getState().app.actualChannelId, getState().user.token)
+        return fetchMessageCreate(value, attachments, getState().app.actualChannelId, getState().user.token)
             .then(() => {
                 dispatch(sendingMessage(false));
             })
@@ -58,10 +61,11 @@ export const sendMessage = (value: string, attachments: IMessageCustomDataAttach
     };
 };
 
+
 export const deleteMessage = (messageId: string): any => {
     return (dispatch: Dispatch, getState: () => IState ) => {
 
-        fetchMessageDelete(messageId, getState().app.actualChannelId, getState().user.token)
+        return fetchMessageDelete(messageId, getState().app.actualChannelId, getState().user.token)
             .catch((error: ApiError) => {
                 if ('code' in error) {
                     dispatch(errorAdd('Error: Delete Message'));
@@ -81,7 +85,7 @@ export const updateMessage = (newMessageData: IApiMessage, messageId: string): a
     return (dispatch: Dispatch, getState: () => IState ) => {
         dispatch(updatingMessage(true));
 
-        fetchMessageUpdate(newMessageData, messageId, getState().app.actualChannelId, getState().user.token)
+        return fetchMessageUpdate(newMessageData, messageId, getState().app.actualChannelId, getState().user.token)
             .then((message: IMessage) => {
                 dispatch(updateMessageSuccess(message));
                 dispatch(updatingMessage(false));

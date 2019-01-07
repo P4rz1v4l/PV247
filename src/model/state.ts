@@ -13,7 +13,7 @@ export interface IState {
     errors: StateError;
 }
 
-const defaultState: IState = {
+export const defaultState: IState = {
     app: new StateAppRecord(),
     user: new StateUserRecord(),
     channels: Map({}),

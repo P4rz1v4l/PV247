@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { updateMessage, deleteMessage } from '../actions/messagesActionCreators';
 import {Dispatch} from 'redux';
 import {ChatMessage, ChatMessageDispatchToProps, ChatMessageStateToProps} from '../components/chat/ChatMessage';
-import {IApiMessage} from '../util/fetchMessageUpdate';
+import {IApiMessage} from '../util/apiInterfaces';
 import {IState} from '../model/state';
 
 const mapStateToProps = (state: IState) => {

@@ -7,11 +7,11 @@
 }
 
 .input button:hover {
-    background: #edf1fc;
+    background-color: #edf1fc;
 }
 
 .input button:active {
-    background: #d4defa;
+    background-color: #d4defa;
 }
 
 .input input[type=file] {

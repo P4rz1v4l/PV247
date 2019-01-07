@@ -15,7 +15,8 @@ import createAutoListPlugin from 'draft-js-autolist-plugin';
 import createMentionPlugin, { defaultSuggestionsFilter } from 'draft-js-mention-plugin';
 import {createHighlightPlugin} from '../../driftPlugins/highlightPlugin';
 import {IMessageCustomDataAttachments} from '../../model/stateMessages';
-import {getDownloadLink, IApiFileInfo, IApiFileUri, uploadFile} from '../../util/uploadFile';
+import {IApiFileInfo, IApiFileUri} from '../../util/apiInterfaces';
+import {getDownloadLink, uploadFile} from '../../util/uploadFile';
 
 interface IMention {
     name: string;
@@ -79,6 +80,10 @@ export class ChatInput extends React.PureComponent<IChatInputDispatchToProps & I
             suggestions: this.props.mentions,
             attachments: Immutable.List([]),
         };
+    }
+
+    componentDidMount() {
+        this.focus();
     }
 
     onChange = (editorState: any) => {
@@ -183,7 +188,6 @@ export class ChatInput extends React.PureComponent<IChatInputDispatchToProps & I
                     handleKeyCommand={this.handleKeyCommand}
                     plugins={plugins}
                     ref={(element: any) => { this.refEditor = element; }}
-                    placeholder="Text message"
                 />
                 <MentionSuggestions
                     onSearchChange={this.onSearchChange}

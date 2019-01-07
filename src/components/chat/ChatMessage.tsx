@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {MessageRecord} from '../../model/stateMessages';
-import {IApiMessage} from '../../util/fetchMessageUpdate';
+import {IApiMessage, IApiUser} from '../../util/apiInterfaces';
 import {memoizeFetchUserInfo} from '../../util/fetchUserInfo';
-import {IApiUser} from '../../util/fetchUserUpdate';
 import {EditorState, convertFromRaw} from 'draft-js';
 // @ts-ignore
 import Editor from 'draft-js-plugins-editor';

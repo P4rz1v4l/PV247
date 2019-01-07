@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {memoizeFetchUserInfo} from '../../util/fetchUserInfo';
-import {IApiUser} from '../../util/fetchUserUpdate';
+import {IApiUser} from '../../util/apiInterfaces';
 
 interface IChatInfoUsersItemState {
     nick: string;

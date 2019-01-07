@@ -9,12 +9,13 @@ import {fetchUserLogin} from '../util/fetchUserLogin';
 import {fetchUserSignup} from '../util/fetchUserSignup';
 import {fetchUserInfo} from '../util/fetchUserInfo';
 import {IState} from '../model/state';
-import {fetchUserUpdate, IApiUser} from '../util/fetchUserUpdate';
+import {fetchUserUpdate} from '../util/fetchUserUpdate';
+import {IApiUser, IApiFileInfo, IApiFileUri, IApiAuth} from '../util/apiInterfaces';
 import {errorAdd} from './errorsActionCreators';
-import {getDownloadLink, IApiFileInfo, IApiFileUri, uploadFile} from '../util/uploadFile';
+import {getDownloadLink, uploadFile} from '../util/uploadFile';
 
 
-const userLoginSucces = (userData: IApiUser, loginData: {token: string; expiration: string} ): any => ({
+const userLoginSuccess = (userData: IApiUser, loginData: IApiAuth ): any => ({
     type: USER_LOGIN_SUCCESS,
     payload: {
         email: userData.email,
@@ -29,24 +30,24 @@ export const userLogin = (email: string): any => {
     return (dispatch: Dispatch) => {
         dispatch(loginningUser(true));
 
-        fetchUserSignup(email)
+        return fetchUserSignup(email)
             .then(() => {
-                fetchUserLogin(email)
+                return fetchUserLogin(email)
                     .then((loginData) => {
-                        fetchUserInfo(email, loginData.token)
+                        return fetchUserInfo(email, loginData.token)
                             .then((userData: IApiUser) => {
-                                dispatch(userLoginSucces(userData, loginData));
+                                dispatch(userLoginSuccess(userData, loginData));
                                 dispatch(loginningUser(false));
                             });
                     });
             })
             .catch((errorSignup: ApiError) => {
                 if (errorSignup.getCode() === 400) {
-                    fetchUserLogin(email)
+                    return fetchUserLogin(email)
                         .then((loginData) => {
-                            fetchUserInfo(email, loginData.token)
+                            return fetchUserInfo(email, loginData.token)
                                 .then((userData: IApiUser) => {
-                                    dispatch(userLoginSucces(userData, loginData));
+                                    dispatch(userLoginSuccess(userData, loginData));
                                     dispatch(loginningUser(false));
                                 });
                         })
@@ -58,12 +59,13 @@ export const userLogin = (email: string): any => {
                 else {
                     dispatch(errorAdd('Error: Login account'));
                     dispatch(loginningUser(false));
+                    return;
                 }
             });
     };
 };
 
-export const userUpdateSucces = (userData: {email: string, customData: {nick: string, avatar: string, channelsOrder: string[]}} ): any => ({
+export const userUpdateSuccess = (userData: {email: string, customData: {nick: string, avatar: string, channelsOrder: string[]}} ): any => ({
     type: USER_UPDATE_SUCCESS,
     payload: {
         email: userData.email,
@@ -77,11 +79,11 @@ export const userChangeNick = (nick: string): any => {
     return (dispatch: Dispatch, getState: () => IState ) => {
         dispatch(changingNameUser(true));
 
-        fetchUserInfo(getState().user.email, getState().user.token)
+        return fetchUserInfo(getState().user.email, getState().user.token)
             .then((userData) => {
-                fetchUserUpdate({...userData, customData: {...userData.customData, nick}}, getState().user.token)
+                return fetchUserUpdate({...userData, customData: {...userData.customData, nick}}, getState().user.token)
                     .then((newUserData) => {
-                        dispatch(userUpdateSucces(newUserData));
+                        dispatch(userUpdateSuccess(newUserData));
                         dispatch(changingNameUser(false));
                     });
             })
@@ -96,15 +98,15 @@ export const userChangeAvatar = (data: File): any => {
     return (dispatch: Dispatch, getState: () => IState ) => {
         dispatch(changingAvatarUser(true));
 
-        uploadFile(data, getState().user.token)
+        return uploadFile(data, getState().user.token)
             .then((fileInfo: IApiFileInfo[]) => {
-                getDownloadLink(fileInfo[0].id, getState().user.token)
+                return getDownloadLink(fileInfo[0].id, getState().user.token)
                     .then((link: IApiFileUri) => {
-                        fetchUserInfo(getState().user.email, getState().user.token)
+                        return fetchUserInfo(getState().user.email, getState().user.token)
                             .then((userData) => {
-                                fetchUserUpdate({...userData, customData: {...userData.customData, avatar: link.fileUri}}, getState().user.token)
+                                return fetchUserUpdate({...userData, customData: {...userData.customData, avatar: link.fileUri}}, getState().user.token)
                                     .then((newUserData) => {
-                                        dispatch(userUpdateSucces(newUserData));
+                                        dispatch(userUpdateSuccess(newUserData));
                                         dispatch(changingAvatarUser(false));
                                     });
                             });

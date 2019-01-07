@@ -1,17 +1,5 @@
 import {validateResponse} from './validateResponse';
 
-export interface IApiFileInfo {
-    id: string;
-    name: string;
-    extension: string;
-    createdBy: string;
-    fileSize: number;
-}
-
-export interface IApiFileUri {
-    fileUri: string;
-}
-
 export const uploadFile = (file: File, token: string) => {
     const formData = new FormData();
     formData.append('Files', file);

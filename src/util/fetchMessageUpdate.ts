@@ -1,11 +1,6 @@
 import {MyAppId} from '../constants/myAppId';
 import {validateResponse} from './validateResponse';
-import {IMessageCustomData} from '../model/stateMessages';
-
-export interface IApiMessage {
-    value: string;
-    customData: IMessageCustomData;
-}
+import {IApiMessage} from './apiInterfaces';
 
 export const fetchMessageUpdate = (messageData: IApiMessage, messageId: string, channelId: string | null, token: string) => fetch(
     'https://pv247messaging.azurewebsites.net/api/v2/app/' + MyAppId + '/channel/' + channelId + '/message/' + messageId,
