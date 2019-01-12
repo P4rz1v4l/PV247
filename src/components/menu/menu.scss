@@ -23,6 +23,22 @@
     padding: 0;
   }
 
+  .logout {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    height: 46px;
+    text-align: center;
+    background-color: #60355d;
+    font-weight: bold;
+    line-height: 46px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f15c70;
+    }
+  }
+
   .header {
     margin: 0 0 86px 0;
     padding: 18px $menu-padding-leftright;
@@ -70,7 +86,7 @@
   }
 
   .channels {
-    margin: 0;
+    margin: 0 0 46px 0;
 
     .title {
       padding: 0 $menu-padding-leftright;
@@ -98,7 +114,7 @@
         }
 
         .move {
-          cursor: n-resize;
+          cursor: pointer;
         }
 
         svg {

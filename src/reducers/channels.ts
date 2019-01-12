@@ -6,8 +6,9 @@ import {
     CHANNELS_FETCH_SUCCESS,
     CHANNELS_UPDATE_SUCCESS,
 } from '../constants/channelsActionsTypes';
+import {STATE_DATA_CLEAR} from '../constants/appActionsTypes';
 
-export const channels = (prevState = Map({}) as StateChannels, action: any): StateChannels => {
+export const channels = (prevState = Map() as StateChannels, action: any): StateChannels => {
     switch (action.type) {
         case CHANNELS_FETCH_SUCCESS: {
             const channelsMap: any = {};
@@ -45,6 +46,10 @@ export const channels = (prevState = Map({}) as StateChannels, action: any): Sta
 
         case CHANNEL_UPDATE_SUCCESS: {
             return prevState.set(action.payload.channel.id, new ChannelRecord(action.payload.channel));
+        }
+
+        case STATE_DATA_CLEAR: {
+            return Map();
         }
 
         default:

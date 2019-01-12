@@ -4,6 +4,7 @@ import {
 } from '../constants/messagesActionsTypes';
 import {IMessage, StateMessages, MessageRecord} from '../model/stateMessages';
 import {OrderedMap, Set} from 'immutable';
+import {STATE_DATA_CLEAR} from '../constants/appActionsTypes';
 
 export const messages = (prevState = OrderedMap({}) as StateMessages, action: any) => {
     switch (action.type) {
@@ -39,6 +40,10 @@ export const messages = (prevState = OrderedMap({}) as StateMessages, action: an
             });
 
             return messagesMap;
+        }
+
+        case STATE_DATA_CLEAR: {
+            return OrderedMap();
         }
 
         default:

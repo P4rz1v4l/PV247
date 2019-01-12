@@ -2,6 +2,7 @@ import {StateUserRecord} from '../model/stateUser';
 import {
     USER_LOGIN_SUCCESS, USER_UPDATE_SUCCESS
 } from '../constants/usersActionsTypes';
+import {STATE_DATA_CLEAR} from '../constants/appActionsTypes';
 
 export const user = (prevState = new StateUserRecord() as StateUserRecord, action: any) => {
     switch (action.type) {
@@ -11,6 +12,10 @@ export const user = (prevState = new StateUserRecord() as StateUserRecord, actio
 
         case USER_UPDATE_SUCCESS: {
             return new StateUserRecord({isLogged: true, email: prevState.email, nick: action.payload.nick, avatar: action.payload.avatar, channelsOrder: action.payload.channelsOrder, token: prevState.token});
+        }
+
+        case STATE_DATA_CLEAR: {
+            return new StateUserRecord();
         }
 
         default:

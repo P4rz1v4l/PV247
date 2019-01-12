@@ -1,13 +1,14 @@
 import * as React from 'react';
 import {MenuChannelsListItem} from './MenuChannelsListItem';
 import {BeatLoader} from 'react-spinners';
-import {ChannelRecord, StateChannels} from '../../model/stateChannels';
+import {StateChannels} from '../../model/stateChannels';
 
 export interface IMenuChannelsListStateProps {
     channelLoading: boolean;
     actualChannelId: string | null;
     channels: StateChannels;
     actualUser: string;
+    usersOrderedChannels: string[];
 }
 
 export interface IMenuChannelsListDispatchProps {
@@ -15,10 +16,19 @@ export interface IMenuChannelsListDispatchProps {
     channelsUpdate: () => void;
     changeChannel: (channelsId: string) => void;
     toggleChannelCreate: (inCreateChannel: boolean) => void;
+    userChangeChannelsOrder: (orderedChannels: string[]) => void;
 }
 
 export class MenuChannelsList extends React.PureComponent<IMenuChannelsListStateProps & IMenuChannelsListDispatchProps> {
     _channelUpdater: any;
+
+    constructor(props: IMenuChannelsListStateProps & IMenuChannelsListDispatchProps) {
+        super(props);
+
+        this.state = {
+            orderedChannels: null,
+        };
+    }
 
     componentDidMount() {
         this.props.fetchChannels();
@@ -29,21 +39,27 @@ export class MenuChannelsList extends React.PureComponent<IMenuChannelsListState
         clearInterval(this._channelUpdater);
     }
 
-    render() {
-        const channels = this.props.channels.valueSeq().map((channel: ChannelRecord) => {
-            if (channel.customData.users.indexOf(this.props.actualUser) > -1) {
-                return (
-                    <MenuChannelsListItem
-                        key={channel.id}
-                        id={channel.id}
-                        name={channel.name}
-                        active={(channel.id === this.props.actualChannelId)}
-                        changeChannel={this.props.changeChannel}
-                    />
-                );
-            }
+    updateOrder = (oldIndex: number, newIndex: number) => {
+        if (newIndex >= 0 && newIndex < this.props.usersOrderedChannels.length) {
+            const clone = this.props.usersOrderedChannels.slice(0);
+            clone[oldIndex] = clone.splice(newIndex, 1, clone[oldIndex])[0];
+            this.props.userChangeChannelsOrder(clone);
+        }
+    };
 
-            return '';
+    render() {
+        const channels = this.props.usersOrderedChannels.map((channelID: string, index: number) => {
+            return (
+                <MenuChannelsListItem
+                    key={this.props.channels.getIn([channelID, 'id'])}
+                    id={channelID}
+                    index={index}
+                    name={this.props.channels.getIn([channelID, 'name'])}
+                    active={(channelID === this.props.actualChannelId)}
+                    changeChannel={this.props.changeChannel}
+                    updateIndex={this.updateOrder}
+                />
+            );
         });
 
         return (

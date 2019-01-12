@@ -32,6 +32,7 @@ export interface IChatInputStateToProps {
     messageSending: boolean;
     mentions: IMention[];
     token: string;
+    channelId: string | null;
 }
 
 export interface IChatInputDispatchToProps {
@@ -45,9 +46,9 @@ const highlightPlugin = createHighlightPlugin();
 const mentionPlugin = createMentionPlugin({
     positionSuggestions: (settings: any) => {
         return {
-            top: settings.decoratorRect.top - 80 + 'px', // change this value (40) for manage the distance between cursor and bottom edge of popover
+            top: settings.decoratorRect.top - 80 + 'px',
             display: 'block',
-            transform: 'scale(1) translateY(-100%)', // transition popover on the value of its height
+            transform: 'scale(1) translateY(-100%)',
             transformOrigin: '1em 0% 0px',
             transition: 'all 0.25s cubic-bezier(0.3, 1.2, 0.2, 1)'
         };
@@ -57,9 +58,9 @@ const { MentionSuggestions } = mentionPlugin;
 const emojiPlugin = createEmojiPlugin({
     positionSuggestions: (settings: any) => {
         return {
-            top: settings.decoratorRect.top - 105 + 'px', // change this value (40) for manage the distance between cursor and bottom edge of popover
+            top: settings.decoratorRect.top - 105 + 'px',
             display: 'block',
-            transform: 'scale(1) translateY(-100%)', // transition popover on the value of its height
+            transform: 'scale(1) translateY(-100%)',
             transformOrigin: '1em 0% 0px',
             transition: 'all 0.25s cubic-bezier(0.3, 1.2, 0.2, 1)'
         };
@@ -84,6 +85,13 @@ export class ChatInput extends React.PureComponent<IChatInputDispatchToProps & I
 
     componentDidMount() {
         this.focus();
+    }
+
+    componentDidUpdate() {
+        const mentions: IMention[] = this.props.mentions;
+        this.setState((oldState) => ({
+            ...oldState, suggestions: mentions
+        }));
     }
 
     onChange = (editorState: any) => {
@@ -181,7 +189,7 @@ export class ChatInput extends React.PureComponent<IChatInputDispatchToProps & I
     render() {
     return (
         <div>
-            <div onClick={this.focus} className="editor">
+            <div className="editor">
                 <Editor
                     editorState={this.state.editorState}
                     onChange={this.onChange}

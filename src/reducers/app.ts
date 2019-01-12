@@ -9,7 +9,7 @@ import {
     APP_MESSAGE_SENDING,
     APP_MESSAGE_UPDATING,
     APP_CHANNEL_UPDATING,
-    APP_USER_CHANGING_AVATAR,
+    APP_USER_CHANGING_AVATAR, STATE_DATA_CLEAR,
 } from '../constants/appActionsTypes';
 import {StateAppRecord} from '../model/stateApp';
 
@@ -57,6 +57,10 @@ export const app = (prevState = new StateAppRecord() as StateAppRecord, action: 
 
         case APP_MESSAGE_UPDATING: {
             return prevState.set('messageUpdating', action.payload.messageUpdating);
+        }
+
+        case STATE_DATA_CLEAR: {
+            return new StateAppRecord();
         }
 
         default:

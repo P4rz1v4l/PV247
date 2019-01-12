@@ -130,7 +130,8 @@
         &:disabled,
         &[disabled],
         &[disabled]:hover {
-          background-color: #cccccc;
+          background-color: #ea7b89;
+          cursor: auto;
         }
       }
     }

@@ -14,7 +14,7 @@ export const user1: IApiUser = {
     customData: {
         nick: 'test1',
         avatar: '',
-        channelsOrder: []
+        channelsOrder: ['003', '001']
     }
 };
 

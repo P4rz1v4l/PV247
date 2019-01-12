@@ -6,7 +6,7 @@ import {channel1, token, user1} from '../testData';
 import {fail400, fail404, successAuth, successUser1Data} from '../mockData';
 import {APP_USER_CHANGING_NAME, APP_USER_LOGINNING} from '../../src/constants/appActionsTypes';
 import {USER_LOGIN_SUCCESS, USER_UPDATE_SUCCESS} from '../../src/constants/usersActionsTypes';
-import {userChangeNick, userLogin} from '../../src/actions/userActionCreator';
+import {userChangeChannelsOrder, userChangeNick, userLogin} from '../../src/actions/userActionCreator';
 import {ERROR_ADD} from '../../src/constants/errorsActionsTypes';
 
 const mockStore = configureMockStore([thunk]);
@@ -117,3 +117,41 @@ describe('userChangeNick', () => {
         });
     });
 });
+
+describe('userChangeChannelsOrder', () => {
+    const store = mockStore({app: {actualChannelId: channel1.id}, user: {token, email: user1.email}});
+
+    beforeEach(() => {
+        store.clearActions();
+    });
+
+    afterEach(() => {
+        fetchMock.restore();
+    });
+
+    it('success', () => {
+        fetchMock.get('https://pv247messaging.azurewebsites.net/api/v2/' + MyAppId + '/user/' + user1.email, successUser1Data);
+        fetchMock.put('https://pv247messaging.azurewebsites.net/api/v2/' + MyAppId + '/user/' + user1.email, successUser1Data);
+
+        const expectedActions = [
+            {type: USER_UPDATE_SUCCESS, payload: {email: user1.email, nick: user1.customData.nick, avatar: user1.customData.avatar, channelsOrder: user1.customData.channelsOrder}},
+        ];
+
+        return store.dispatch(userChangeChannelsOrder(user1.customData.channelsOrder)).then(() => {
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
+
+    it('fail', () => {
+        fetchMock.get('https://pv247messaging.azurewebsites.net/api/v2/' + MyAppId + '/user/' + user1.email, fail400);
+
+        const expectedActions = [
+            {type: ERROR_ADD, payload: {text: 'Error: Change order channel'}},
+        ];
+
+        return store.dispatch(userChangeChannelsOrder(user1.customData.channelsOrder)).then(() => {
+            expect(store.getActions()[0]).toMatchObject(expectedActions[0]);
+        });
+    });
+});
+

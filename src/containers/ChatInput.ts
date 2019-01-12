@@ -11,6 +11,7 @@ const mapStateToProps = (state: IState) => {
         messageSending: state.app.messageSending,
         mentions: state.channels.getIn([state.app.actualChannelId, 'customData', 'users']).map((email: string) => ({name: email})),
         token: state.user.token,
+        channelId: state.app.actualChannelId,
     };
 };
 

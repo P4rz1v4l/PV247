@@ -118,3 +118,18 @@ export const userChangeAvatar = (data: File): any => {
             });
     };
 };
+
+export const userChangeChannelsOrder = (channelsOrder: string[]): any => {
+    return (dispatch: Dispatch, getState: () => IState ) => {
+        return fetchUserInfo(getState().user.email, getState().user.token)
+            .then((userData) => {
+                return fetchUserUpdate({...userData, customData: {...userData.customData, channelsOrder}}, getState().user.token)
+                    .then((newUserData) => {
+                        dispatch(userUpdateSuccess(newUserData));
+                    });
+            })
+            .catch(() => {
+                dispatch(errorAdd('Error: Change order channel'));
+            });
+    };
+};

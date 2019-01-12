@@ -7,7 +7,7 @@ import {
     APP_USER_CHANGING_NAME,
     APP_MESSAGES_LOADING,
     APP_MESSAGE_SENDING,
-    APP_MESSAGE_UPDATING, APP_CHANNEL_UPDATING, APP_USER_CHANGING_AVATAR,
+    APP_MESSAGE_UPDATING, APP_CHANNEL_UPDATING, APP_USER_CHANGING_AVATAR, STATE_DATA_CLEAR,
 } from '../constants/appActionsTypes';
 import {Dispatch} from 'redux';
 import {IState} from '../model/state';
@@ -16,6 +16,9 @@ import {loadMessagesSuccess} from './messagesActionCreators';
 import {fetchChannelInfo} from '../util/fetchChannelInfo';
 import {errorAdd} from './errorsActionCreators';
 
+export const stateClear = (): any => ({
+    type: STATE_DATA_CLEAR,
+});
 
 export const toggleChannelCreate = (inCreateChannel: boolean): any => ({
     type: APP_TOGGLE_CHANNEL_CREATE,

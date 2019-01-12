@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {Menu} from './menu/Menu';
 import Sidebar from 'react-sidebar';
 import {LoginPage} from './login/LoginPage';
 import {ChatContainer} from '../containers/Chat';
 import {StateUserRecord} from '../model/stateUser';
 import {StateAppRecord} from '../model/stateApp';
 import {ErrorsListContainer} from '../containers/errorsList';
+import {MenuContainer} from '../containers/Menu';
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 
@@ -59,7 +59,7 @@ export class Switch extends React.PureComponent<ISwitchStateProps & ISwitchDispa
         if ( this.props.user.get('isLogged') ) {
             content = () => (
                 <Sidebar
-                    sidebar={<Menu />}
+                    sidebar={<MenuContainer />}
                     open={this.state.sidebarOpen}
                     docked={this.state.sidebarDocked}
                     onSetOpen={this.onSetSidebarOpen}
